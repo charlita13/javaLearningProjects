@@ -1,0 +1,132 @@
+import java.lang.reflect.Array;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.util.List;
+import java.util.Scanner;
+
+public class Slot {
+
+    String[] symbols = {"🍒", "🍉", "🍋", "🔔", "⭐"};
+
+    private static double credit;
+
+    public Slot() {
+        this.credit = 0;
+    }
+
+    public void setCredit(double credit) {
+        this.credit = credit;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public void possibleSymbolsAndMath() {
+        System.out.println("Possible symbols: ");
+        System.out.println("🍒🍒🍒" + " BET * 3");
+        System.out.println("🍉🍉🍉" + " BET * 7");
+        System.out.println("🍋🍋🍋" + "  BET * 15");
+        System.out.println("🔔🔔🔔" + "  BET * 25");
+        System.out.println("⭐⭐⭐" + " BET * 100");
+        System.out.println("🃏🃏🃏" + "  BET * 10");
+        System.out.println("🃏" + " can replace any other symbol");
+        System.out.println();
+    }
+
+    public void possibleCommands() {
+        System.out.println("Possible commands: ");
+
+        for (Command c : Command.values()) {
+            System.out.println(c + ": " + c.getDescription());
+        };
+        System.out.println();
+    }
+
+    public void showCredit() {
+        System.out.println("Your current credit is | " + this.getCredit() + " |\n");
+    }
+
+    public static void doubleInputCheck(Scanner scanner, Slot automat, String pokyn) {
+        if (pokyn.equals("deposit")) {
+            System.out.print("Enter the amount you want to deposit: ");
+        } else if (pokyn.equals("withdraw")) {
+            System.out.print("Enter the amount you want to withdraw: ");
+        };
+
+        if (scanner.hasNextDouble()) {
+            double addDeposit = scanner.nextDouble();
+            scanner.nextLine();
+            if (addDeposit > 0) {
+                if (pokyn.equals("deposit")) {
+                    automat.setCredit(automat.getCredit() + addDeposit);
+                    automat.showCredit();
+                } else if (pokyn.equals("withdraw")) {
+                    if ((automat.getCredit() - addDeposit) >= 0) {
+                        automat.setCredit(automat.getCredit() - addDeposit);
+                        automat.showCredit();
+                    } else {
+                        System.out.println("Not executed. Max possible withdraw | " + automat.getCredit() + " |");
+                    }
+
+                }
+            } else {
+                System.out.println("Wrong value. Enter positive number");
+                automat.showCredit();
+            }
+        } else {
+            System.out.println("Invalid input. Please enter a valid number");
+            scanner.nextLine();
+            automat.showCredit();
+        }
+    }
+
+    public static String displaySymbol() {
+        // 🍒 = 1 - 33; 🍉 = 34 - 55; 🍋 = 56 - 70; 🔔 = 71 - 79; ⭐ = 80 - 83;  🃏= 84 - 100
+
+        SymbolRange[] ranges = {
+                new SymbolRange("🍒", 33),
+                new SymbolRange("🍉", 55),
+                new SymbolRange("🍋", 70),
+                new SymbolRange("🔔", 79),
+                new SymbolRange("⭐", 83),
+                new SymbolRange("🃏", 100)
+        };
+
+        String[] kombinace = new String[3];
+
+        for (int i = 0; i < 3; i++) {
+            int randomNumber = 1 + (int) (Math.random() * 100);
+            for (SymbolRange range : ranges) {
+                if (randomNumber <= range.maxRange) {
+                    kombinace[i] = range.symbol;
+                    break;
+                }
+            }
+        }
+        String values = kombinace[0] + kombinace[1] + kombinace[2];
+        return values;
+    }
+
+    public static boolean creditCheck(double sazka) {
+        return ((Slot.credit - sazka) >= 0);
+
+    }
+
+    public static double winningCombination(double sazka, String padlaKombinace) {
+        if (List.of("🍒🍒🍒", "🃏🍒🍒", "🍒🃏🍒", "🍒🍒🃏", "🃏🍒🃏", "🍒🃏🃏", "🃏🃏🍒").contains(padlaKombinace)) {
+            return sazka * 3;
+        } else if (List.of("🍉🍉🍉", "🃏🍉🍉", "🍉🃏🍉", "🍉🍉🃏", "🃏🍉🃏", "🍉🃏🃏", "🃏🃏🍉").contains(padlaKombinace)) {
+            return sazka * 7;
+        } else if (List.of("🍋🍋🍋", "🃏🍋🍋", "🍋🃏🍋", "🍋🍋🃏", "🃏🍋🃏", "🍋🃏🃏", "🃏🃏🍋").contains(padlaKombinace)) {
+            return sazka * 15;
+        } else if (List.of("🔔🔔🔔", "🃏🔔🔔", "🔔🃏🔔", "🔔🔔🃏", "🔔🃏🃏", "🃏🔔🃏", "🃏🃏🔔").contains(padlaKombinace)) {
+            return sazka * 25;
+        } else if (List.of("⭐⭐⭐", "🃏⭐⭐", "⭐🃏⭐", "⭐⭐🃏", "⭐🃏🃏", "🃏⭐🃏", "🃏🃏⭐").contains(padlaKombinace)) {
+            return sazka * 100;
+        } else if (List.of("🃏🃏🃏").contains(padlaKombinace)) {
+            return sazka * 10;
+        } else {
+            return 0.0;
+        }
+    }
+}
