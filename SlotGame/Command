@@ -1,0 +1,19 @@
+public enum Command {
+    PLAY("Start game"),
+    DEPOSIT("Enter money to play"),
+    WITHDRAW("Withdraw your money"),
+    CREDIT("Show your credit"),
+    HELP("Show all possible commands"),
+    RATE("Show all possible symbols and win rate"),
+    EXIT("Exit the program");
+
+    private final String description;
+
+    Command(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
