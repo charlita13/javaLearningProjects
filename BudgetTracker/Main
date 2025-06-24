@@ -1,0 +1,111 @@
+import java.time.LocalDateTime;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        System.out.println("Welcome to the Budget Tracker!\n");
+        System.out.println("Valid commands:\nadd - Add a new transaction\n" +
+                "delete - Remove a transaction\n" + "list - List all transactions\n" +
+                "summary - Show income, expenses, and balance\n" +
+                "filter - Show transactions by category\n" +
+                "save - Save data to file (ask if exit)\n" +
+                "load - Load data from file (always with start)\n" +
+                "exit - Exit the program\n");
+
+        Scanner otazka = new Scanner(System.in);
+        Brain mozek = new Brain();
+        mozek.loadDataFromFile();
+
+        while (true) {
+            System.out.println("Insert your command:");
+            String vstup = otazka.nextLine().toLowerCase().trim();
+
+            if (! mozek.validniVstup(vstup)) {
+                System.out.println("Invalid command, try again.");
+                continue;
+            }
+        switch (vstup) {
+            case "add":
+
+                LocalDateTime datum = LocalDateTime.now();
+
+                System.out.println("New transaction - transfer description: ");
+                String popis = otazka.nextLine();
+
+                System.out.println("New transaction - transfer amount (use negative for expenses): ");
+                double suma = otazka.nextDouble();
+                otazka.nextLine();
+
+                System.out.println("New transaction - transfer category: ");
+                String kategorie = otazka.nextLine();
+
+                mozek.createTransaction(datum, popis, suma, kategorie);
+                break;
+
+            case "delete":
+                System.out.println("Write down position of teh transaction you want to delete:");
+                int deletePosition = otazka.nextInt();
+                otazka.nextLine();
+                mozek.deleteSpecificTransaction(deletePosition);
+                System.out.println("Transaction on the position " +
+                        deletePosition + " was removed from the list.");
+                break;
+
+            case "list":
+                mozek.listAllTransactions();
+                break;
+
+            case "filter":
+                System.out.println("Write down category that you want to show:");
+                String showCategory = otazka.nextLine();
+                mozek.filterSpecificTransactions(showCategory);
+                break;
+
+            case "summary":
+                mozek.transactionsOverview();
+                break;
+
+            case "save":
+                if (mozek.isListEmpty()) {
+                    System.out.println("No transactions to save. Do you want to save empty file? Y or N.");
+                    String overeni = otazka.nextLine().toLowerCase().trim();
+                    if (overeni.equals("n")) {
+                        System.out.println("Save action not executed.\n");
+                    }
+                    else {
+                        mozek.saveCurrentTransactions();
+                    }
+                }
+                else {
+                    mozek.saveCurrentTransactions();
+                }
+                break;
+
+
+            case "load":
+                System.out.println("All current data will be replaced with date from transakce.txt. Y or N.");
+                String overeni = otazka.nextLine().toLowerCase().trim();
+                if (overeni.equals("n")) {
+                    System.out.println("Load action not executed.\n");
+                }
+                else {
+                    mozek.loadDataFromFile();
+                }
+                break;
+
+            case "exit":
+                System.out.println("Save data before exit? Y or N.");
+                String dotaz = otazka.nextLine().toLowerCase().trim();
+                if (dotaz.equals("n")) {
+                    System.out.println("Exit, NO data saved.\n");
+                }
+                else {
+                    mozek.saveCurrentTransactions();
+                    System.out.println("Exit, data saved.\n");
+                }
+                return;
+            }
+        }
+    }
+}
