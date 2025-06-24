@@ -1,0 +1,10 @@
+public class SymbolRange {
+
+    String symbol;
+    int maxRange;  // inclusive upper bound
+
+    SymbolRange(String symbol, int maxRange) {
+        this.symbol = symbol;
+        this.maxRange = maxRange;
+    }
+}
