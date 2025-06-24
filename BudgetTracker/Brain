@@ -1,1 +1,111 @@
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
+public class Brain {
+
+    private static final Set<String> acceptedCommands = new HashSet<>(Arrays.asList("add", "delete", "list", "summary", "filter", "save", "load", "exit"));
+    private List<Transaction> transactionList = new ArrayList<>();
+
+    public boolean validniVstup(String vstup) {
+
+        return acceptedCommands.contains(vstup);
+    }
+
+    public void createTransaction(LocalDateTime datum, String popis, double suma, String kategorie) {
+        Transaction objekt = new Transaction(datum, popis, suma, kategorie);
+        transactionList.add(objekt);
+        System.out.println("New transaction created. Date: " + objekt.getDen() +
+                "; description: " + objekt.getDescription() + "; amount: " + objekt.getAmount() +
+                "; category: " + objekt.getCategory() + ".\n");
+    }
+
+    public void saveCurrentTransactions() {
+        try {
+            PrintWriter ukladani = new PrintWriter(new FileWriter("transakce.txt"));
+            for (Transaction t : transactionList) {
+                ukladani.println(t.getDen() + ";" + t.getDescription() + ";" + t.getAmount() + ";" + t.getCategory());
+                }
+            ukladani.close();
+            System.out.println("All transactions saved");
+        }
+        catch (IOException e) {
+            System.out.println("IO error" + e.getMessage());
+        }
+    }
+
+    public boolean isListEmpty() {
+        return transactionList.isEmpty();
+    }
+
+    public void listAllTransactions () {
+        for (int i = 0; i < transactionList.size() ; i++) {
+            System.out.println(i + 1 + ". DATE: " + transactionList.get(i).getDen() +
+            "; DESCRIPTION: " + transactionList.get(i).getDescription() +
+            "; AMOUNT: " + transactionList.get(i).getAmount() +
+            "; CATEGORY: " + transactionList.get(i).getCategory());
+        }
+        if (transactionList.isEmpty()) {
+            System.out.println("No transactions to show.");
+        }
+    }
+
+    public void loadDataFromFile () {
+        transactionList.clear();
+        try {
+        BufferedReader nahrani = new BufferedReader(new FileReader("transakce.txt"));
+        String line;
+        while ((line = nahrani.readLine()) != null) {
+            String[] parts = line.split(";");
+            LocalDateTime cas = LocalDateTime.parse(parts[0]);
+            String popis = parts[1];
+            double suma = Double.parseDouble(parts[2]);
+            String kategorie = parts[3];
+            transactionList.add(new Transaction(cas, popis, suma, kategorie));
+            }
+        nahrani.close();
+        System.out.println("All transactions loaded");
+        } catch (Exception e) {
+            System.out.println("Error, data not loaded. " + e.getMessage());
+        }
+    }
+
+    public void deleteSpecificTransaction(int position) {
+        transactionList.remove(position - 1);
+    }
+
+    public void filterSpecificTransactions (String category) {
+        Boolean somethingFound = false;
+        for (Transaction t : transactionList) {
+            if (t.getCategory().equals(category.toLowerCase().trim())) {
+                System.out.println("DATE: " + t.getDen() +
+                        "; DESCRIPTION: " + t.getDescription() +
+                        "; AMOUNT: " + t.getAmount() +
+                        "; CATEGORY: " + t.getCategory());
+                somethingFound = true;
+            }
+        }
+        if (somethingFound.equals(false)) {
+            System.out.println("Category not found.\n");
+        }
+    }
+
+    public void transactionsOverview () {
+        double positiveBalance = 0;
+        double negativeBalance = 0;
+        double netBalance = 0;
+        for (Transaction t : transactionList) {
+            if (t.getAmount() > 0) {
+                positiveBalance += t.getAmount();
+            }
+            else {
+                negativeBalance += t.getAmount();
+            }
+        }
+        netBalance = positiveBalance + negativeBalance;
+        System.out.println("Total income: " + positiveBalance);
+        System.out.println("Total expenses: " + negativeBalance);
+        System.out.println("Net balance: " + netBalance);
+    }
+}
