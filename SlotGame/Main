@@ -1,0 +1,111 @@
+import java.lang.reflect.Array;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // hlavní proměnné
+        Scanner scanner = new Scanner(System.in);
+        Slot automat = new Slot();
+        boolean letsPlay = true;
+
+        // uvítání
+        System.out.println("\n*************************");
+        System.out.println("  Welcome to JAVA slots  ");
+        System.out.println("*************************\n");
+
+        // prvodní vypsání 'pravidel'
+        automat.possibleSymbolsAndMath();
+        automat.possibleCommands();
+        automat.showCredit();
+
+        // halvní cyklus
+        while (letsPlay) {
+            System.out.print("Enter your command: ");
+            String userCommand = scanner.nextLine();;
+
+            switch (userCommand.toLowerCase().trim()) {
+                case "play":    // poresit vyherni kombinaci a pricitani kreditu
+                    if (automat.getCredit() == 0) {
+                        System.out.println("No credit available. Please deposit money first.");
+                        break;
+                    }
+
+                    System.out.println("How much do you want to bet?");
+                    double betSum = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    if (automat.getCredit() < betSum) {
+                        System.out.println("Bet too high. Available credit is " + automat.getCredit());
+                        break;
+                    }
+
+                    System.out.println("How many spins do you want to do?");
+                    int spinNumber = scanner.nextInt();
+                    scanner.nextLine();
+                    for (int i = 0; i < spinNumber; i++) {
+
+                        if (! automat.creditCheck(betSum)) {
+                            System.out.println("Credit is not high enough for another spin.");
+                            automat.showCredit();
+                            break;
+                        }
+
+                        automat.setCredit(automat.getCredit() - betSum);
+                        String hodnoty = automat.displaySymbol();
+                        System.out.println(hodnoty);
+
+                        double vyhra =automat.winningCombination(betSum, hodnoty);
+                        if (vyhra > 0) {
+                            System.out.println("You win " + vyhra);
+                        }
+                        automat.setCredit(automat.getCredit() + vyhra);
+
+                        System.out.println("Your credit: " + automat.getCredit());
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+
+                case "deposit":    //DONE
+                    automat.doubleInputCheck(scanner, automat, userCommand.toLowerCase().trim());
+                    break;
+
+                case "withdraw":    //DONE
+                    automat.doubleInputCheck(scanner, automat, userCommand.toLowerCase().trim());
+                    break;
+
+                case "credit":    //DONE
+                    automat.showCredit();
+                    break;
+
+                case "help":    //DONE
+                    automat.possibleCommands();
+                    break;
+
+                case "rate":    //DONE
+                    automat.possibleSymbolsAndMath();
+                    break;
+
+                case "exit":    //DONE
+                    if (automat.getCredit() > 0) {
+                        System.out.println("Game over, your remaining credit (" + automat.getCredit() + ") will be paid out.");
+                    } else {
+                        System.out.println("Game over, no credit to be paid out.");
+                    }
+                    letsPlay = false;
+                    break;
+
+                default:
+                    System.out.println("This is not valid command. Enter correct one or type HELP for more information.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}
