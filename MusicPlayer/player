@@ -1,0 +1,70 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.sound.sampled.Clip;
+import java.io.File;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws FileNotFoundException {
+        String mp3Path = "C:\\Users\\karel.kratky\\Desktop\\JAVA_MOJE\\Prehravac\\furElise.wav";
+        File file = new File(mp3Path);
+
+        try(Scanner scanner = new Scanner(System.in);       // v resources try lze užít zdroje a ty se pak automaticky zavřou - scanner i audiostream tak není atřeba speciálně zavírat
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file)) {
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            String response = "";
+
+            while (! response.equals("Q")) {
+                System.out.println("P = play");
+                System.out.println("S = stop");
+                System.out.println("R = reset");
+                System.out.println("Q = quit");
+                System.out.println("Enter your command: ");
+                response = scanner.next().toUpperCase();
+
+            switch (response) {
+                case "Q":
+                    clip.close();
+                    System.out.println("End program.");
+                    break;
+                case "P":
+                    System.out.println("Music plays...");
+                    clip.start();
+                    break;
+                case "S":
+                    System.out.println("Music stopped...");
+                    clip.stop();
+                    break;
+                case "R":
+                    System.out.println("Reset...");
+                    clip.setMicrosecondPosition(0);
+                    break;
+                default:
+                    System.out.println("Wrong input.");
+                    break;
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Neocekavana chyba !");
+            System.out.println(e.getMessage());
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Not supported format !");
+            System.out.println(e.getMessage());
+        } catch (LineUnavailableException e) {
+            System.out.println("Unable to access audio resource !");
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("Bye");
+        }
+    }
+}
