@@ -1,0 +1,43 @@
+public class HangMan {
+
+    public static final String[] HANGMAN_STAGES = {
+            """
+      """,
+            """
+       o
+       
+    """,
+            """
+       o
+       |
+       
+    """,
+            """
+       o
+      /|
+      
+    """,
+            """
+       o
+      /|\\
+      
+    """,
+            """
+       o
+      /|\\
+      /
+      
+    """,
+            """
+       o
+      /|\\
+      / \\
+      
+    """
+    };
+
+    public static String showHangman(int wrongGuessNumber) {
+        return HANGMAN_STAGES[wrongGuessNumber];
+    }
+
+}
