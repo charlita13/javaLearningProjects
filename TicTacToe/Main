@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // inicializace, proměnné a halvní parametry
+        Scanner scanner = new Scanner(System.in);
+        boolean letsPlay = true;
+        int sizeOfASideOfBoard = 3;
+        Brain brain = new Brain(sizeOfASideOfBoard);
+        int round = 0;
+
+        // vstupní info
+        System.out.println("\n*********************");
+        System.out.println(" * TIC - TIC - TOE * ");
+        System.out.println("*********************\n");
+
+        System.out.println("Enter the name of player 1: ");
+        String player1 = scanner.nextLine();
+        player1 = brain.playerNameValidate("Player1", player1);
+
+        System.out.println("Enter the name of player 2: ");
+        String player2 = scanner.nextLine();
+        player2 = brain.playerNameValidate("Player2", player2);
+
+        // hlavní cyklus
+        while (letsPlay) {
+            brain.printBoard();
+            int row = brain.askForCoordinates(scanner, round, "row", player1, player2);
+            int column = brain.askForCoordinates(scanner, round, "column", player1, player2);
+            brain.updateBoard(row, column, round);
+            round++;
+
+
+            // todo - dál zde (podminky na konec hry a validace duplicitniho jemna)
+            int gameResult = brain.resultGameValidation();
+            switch (gameResult) {
+                case 0 -> System.out.println("pokračuj, jsou volna pole");
+                case 1 -> System.out.println("plne pole - remiza");
+                default -> System.out.println("asi nekdo vyhral, jak?");
+            }
+        }
+    }
+}
