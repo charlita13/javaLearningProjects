@@ -1,0 +1,102 @@
+import java.util.Scanner;
+import java.util.TreeMap;
+
+public class Brain {
+
+    private static final String EMPTY = "0";
+    private static final String X = "1";
+    private static final String O = "2";
+
+    // proměnné
+    private String[][] mainBoard;
+    int boardSize;
+
+    //konstruktor
+    public Brain(int boardSize) {
+        this.boardSize = boardSize;
+        createEmptyBoard();
+    }
+
+    // create empty board - all values are 0
+    public void createEmptyBoard() {
+        mainBoard = new String[boardSize][boardSize];
+
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                mainBoard[i][j] = EMPTY;
+            }
+        }
+    }
+
+    // insert values 1 for X and 2 for 0
+    public void updateBoard(int row, int column, int roundNumber) {
+
+        if (roundNumber % 2 == 0) {
+            mainBoard[row - 1][column - 1] = X;
+        } else {
+            mainBoard[row - 1][column - 1] = O;
+        }
+    }
+
+    //  printBoard asssistent
+    private String getSymbol(String value) {
+        return switch (value) {
+            case "1" -> "X";
+            case "2" -> "O";
+            default -> " ";
+        };
+    }
+
+    // print board with correct symbols
+    public void printBoard() {
+        String sep = "_" + "____".repeat(boardSize);
+        System.out.println(sep);
+
+        for (String[] row : mainBoard) {
+            for (String val : row) {
+                System.out.printf("|%2s ", getSymbol(val));
+            }
+            System.out.println("|\n" + sep);
+        }
+        System.out.println();
+    }
+
+    //get input from user
+    public int askForCoordinates(Scanner scanner, int roundNumber, String actionName, String playerOneName, String playerTwoName) {
+        int input = 0;
+        while (true) {
+            String player = (roundNumber % 2 == 0) ? playerOneName : playerTwoName;
+            System.out.printf("%s, enter %s number: ", player, actionName);
+
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if (input < 1 || input > boardSize) {
+                    System.out.println("Number has to be between 1 and " + boardSize + ".");
+                } else {
+                    return input;
+                }
+            } else {
+                System.out.println("Insert number between 1 and " + boardSize + ".");
+            }
+            scanner.nextLine();
+        }
+    }
+
+    // player name validation
+    public String playerNameValidate(String defaultName, String playerName) {
+        return playerName.isEmpty() ? defaultName : playerName;
+    }
+
+    public int resultGameValidation() {
+        boolean foundEmpty = false;
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (mainBoard[i][j].equals(EMPTY)) {
+                    foundEmpty = true;
+                }
+            }
+        }
+        return (foundEmpty == true) ? 0 : 1;
+    }
+}
