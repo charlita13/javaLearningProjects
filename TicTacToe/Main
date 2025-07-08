@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        // inicializace, proměnné a halvní parametry
+        // inicializace, proměnné a hlavní parametry
         Scanner scanner = new Scanner(System.in);
         boolean letsPlay = true;
         int sizeOfASideOfBoard = 3;
@@ -15,29 +15,59 @@ public class Main {
         System.out.println(" * TIC - TIC - TOE * ");
         System.out.println("*********************\n");
 
+
+        // nastavení jmen hráčů
         System.out.println("Enter the name of player 1: ");
         String player1 = scanner.nextLine();
         player1 = brain.playerNameValidate("Player1", player1);
 
         System.out.println("Enter the name of player 2: ");
         String player2 = scanner.nextLine();
+        if (player2.equals(player1)) {
+            System.out.println("Is not possible to set same name for both players. Name set: 'Player2'.");
+            player2 = "Player2";
+            }
         player2 = brain.playerNameValidate("Player2", player2);
 
         // hlavní cyklus
         while (letsPlay) {
             brain.printBoard();
-            int row = brain.askForCoordinates(scanner, round, "row", player1, player2);
-            int column = brain.askForCoordinates(scanner, round, "column", player1, player2);
-            brain.updateBoard(row, column, round);
+
+            // overeni, zda je herni pole volné
+            boolean fieldIsValid = false;
+            while (fieldIsValid == false) {
+                int row = brain.askForCoordinates(scanner, round, "row", player1, player2);
+                int column = brain.askForCoordinates(scanner, round, "column", player1, player2);
+
+                fieldIsValid = brain.isFieldValid(row, column);
+
+                if (fieldIsValid) {
+                    brain.updateBoard(row, column, round);
+                } else {
+                    System.out.println("This field is already used, add coordination again.");
+                }
+            }
+
+            // vyhodnocení hry
+            boolean anyoneWin = brain.checkWin(round);
+            if (anyoneWin) {
+                if (round % 2 == 0) {
+                    System.out.println("The winner is player: " + player1);
+                } else {
+                    System.out.println("The winner is player: " + player2);
+                }
+                letsPlay = false;
+            }
+
+            // ověření, jestli jde pokračovat - na hřišti jsou volná pole
             round++;
 
-
-            // todo - dál zde (podminky na konec hry a validace duplicitniho jemna)
-            int gameResult = brain.resultGameValidation();
-            switch (gameResult) {
-                case 0 -> System.out.println("pokračuj, jsou volna pole");
-                case 1 -> System.out.println("plne pole - remiza");
-                default -> System.out.println("asi nekdo vyhral, jak?");
+            boolean gameResult = brain.continueGameValidation();
+            if (gameResult == false) {
+                    brain.printBoard();
+                    System.out.println("There are no more empty fields to continue the game. DRAW!");
+                    System.out.println("*********** GAME OVER *********** ");
+                    letsPlay = false;
             }
         }
     }
