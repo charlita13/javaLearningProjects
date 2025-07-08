@@ -113,19 +113,43 @@ public class Brain {
         if (roundNumber % 2 == 0) {
             for (int i = 0; i < mainBoard.length; i++) {
                 if ((validateLine(getRowValues(mainBoard, i + 1), X, 3)) ||
-                        (validateLine(getColumnValues(mainBoard, i + 1), X, 3))) {
+                        (validateLine(getColumnValues(mainBoard, i + 1), X, 3)) ||
+                        (validateLine(getAntidiagonalValue(mainBoard), X, 3)) ||
+                        (validateLine(getDiagonalValue(mainBoard), X, 3))) {
                     result = true;
                 }
             }
         } else {
             for (int i = 0; i < mainBoard.length; i++) {
                 if ((validateLine(getRowValues(mainBoard, i + 1), O, 3)) ||
-                        (validateLine(getColumnValues(mainBoard, i + 1), O, 3))) {
+                        (validateLine(getColumnValues(mainBoard, i + 1), O, 3)) ||
+                        (validateLine(getAntidiagonalValue(mainBoard), X, 3)) ||
+                        (validateLine(getDiagonalValue(mainBoard), X, 3))) {
                     result = true;
                 }
             }
         }
         return result;
+    }
+
+    // get values from antidiagonal
+    private String[] getAntidiagonalValue(String[][] board) {
+        int position = 0;
+        String[] diagonal = new String[mainBoard.length];
+        for (int i = board.length - 1; i >= 0; i--) {
+            diagonal[i] = board[i][position];
+            position++;
+        }
+        return diagonal;
+    }
+
+    // get values from diagonal
+    private String[] getDiagonalValue(String[][] board) {
+        String[] diagonal = new String[mainBoard.length];
+        for (int i = 0; i < board.length; i++) {
+            diagonal[i] = board[i][i];
+        }
+        return diagonal;
     }
 
     // get values from specific row
@@ -142,6 +166,7 @@ public class Brain {
         return column;
     }
 
+    // check for winning condition
     private boolean validateLine(String[] lineToCheck, String symbol, int winLenght) {
         int count = 0;
         for (String oneValue : lineToCheck) {
@@ -156,10 +181,4 @@ public class Brain {
         }
         return false;
     }
-
-    private String[] getDiagonalValue(String[][] board) {
-        String[] diagonal = new String[mainBoard.length];
-        return diagonal;
-    }
-
 }
