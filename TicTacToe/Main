@@ -48,7 +48,7 @@ public class Main {
                 }
             }
 
-            // vyhodnocení hry
+            // vyhodnocení hry (zatím sloupce a řádky)
             boolean anyoneWin = brain.checkWin(round);
             if (anyoneWin) {
                 if (round % 2 == 0) {
