@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class GameSetting {
 
-    // give me all possible commands
+    // show me all commands
     public void possibleCommands() {
         System.out.println("Possible commands: ");
 
@@ -22,39 +22,25 @@ public class GameSetting {
         System.out.println();
     }
 
-    // validate the name nad the role of a player and create a new character
+    // validate the name nad the role of a player and return name and role
     public static String[] playerValidation(Scanner scanner, int playerNumber) {
         System.out.println("Insert name of the player: ");
         String playerName = scanner.nextLine();
         playerName = playerName.isEmpty() ? "player" + playerNumber : playerName;
 
-        System.out.println("Select role for player " + playerName + " (mage, druid, warrior): ");
-        String playerRole = scanner.nextLine();
-        playerRole = playerRole.toUpperCase().trim();
-
+        String playerRole = "";
         boolean isValidRole = false;
+
         while (! isValidRole) {
+            System.out.println("Select role for player " + playerName + " (mage, druid, warrior): ");
+            playerRole = scanner.nextLine().toUpperCase().trim();
+
             try {
                 RoleToPlay action = RoleToPlay.valueOf(playerRole);
-
-                switch (action) {
-                    case DRUID -> {
-                        playerRole = "druid";
-                        isValidRole = true;
-                    }
-                    case MAGE -> {
-                        playerRole = "mage";
-                        isValidRole = true;
-                    }
-                    case WARRIOR -> {
-                        playerRole = "warrior";
-                        isValidRole = true;
-                    }
-                }
+                playerRole = action.name().toLowerCase();
+                isValidRole = true;
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid input. Select role for player " + playerName + " (mage, druid, warrior): ");
-                playerRole = scanner.nextLine();
-                playerRole = playerRole.toUpperCase().trim();
             }
         }
         return new String[]{playerName, playerRole};
