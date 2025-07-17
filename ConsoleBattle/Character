@@ -1,0 +1,23 @@
+public class Character {
+
+    String name;
+    String role;
+
+    // konstruktor
+    public Character(String name, String role) {
+        this.name = name;
+        this.role = role;
+    }
+
+    public void shout() {
+        System.out.println("jsem obecna postava");
+    }
+}
+
+/*
+health
+range attack
+close attack
+spell attack
+special move (polymorph, charge, heal)
+ */
