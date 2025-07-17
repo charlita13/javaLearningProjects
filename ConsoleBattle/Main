@@ -48,6 +48,7 @@ public class Main {
                             players.get(1).name = scanner.nextLine();
                         }
 
+                        // TODO pokračuj s generovanim postav - jake staty a schopnosti a atributy jim dat?
                         // kontrolni vypisy
                         System.out.println("P1 name: " + players.get(0).name);
                         System.out.println("P1 role: " + players.get(0).role);
