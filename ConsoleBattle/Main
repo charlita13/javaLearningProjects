@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // hlavní parametry
+        Scanner scanner = new Scanner(System.in);
+        GameSetting game = new GameSetting();
+        boolean letsPlay = true;
+
+        // uvítání a úvodní informace
+        System.out.println("================================");
+        System.out.println("  WELCOME TO BATTLE SIMULATOR");
+        System.out.println("================================\n");
+        game.possibleCommands();
+
+        // hlavní cyklus
+        while (letsPlay) {
+            System.out.println("Choose your action:");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            // hlavní přepínač pro pokyny
+            try {
+                Command action = Command.valueOf(input);
+
+                switch (action) {
+                    // hlavní hra
+                    case PLAY -> {
+
+                        // založení listu v kterém jsou uloženi hráči
+                        List<Character> players = new ArrayList<>();
+
+                        // založení hráčů
+                        for (int i = 1; i <= 2; i++) {
+                            System.out.println("Player " + i + " setting: ");
+                            String[] playerValues = GameSetting.playerValidation(scanner, i);
+
+                            RoleToPlay role = RoleToPlay.valueOf(playerValues[1].toUpperCase());
+                            Character player = role.createCharacter(playerValues[0]);
+                            players.add(player);
+                        }
+
+                        while (players.get(0).name.equals(players.get(1).name)) {
+                            System.out.println("Same name for both players is confusing. Player 2, please enter new name:");
+                            players.get(1).name = scanner.nextLine();
+                        }
+
+                        // kontrolni vypisy
+                        System.out.println("P1 name: " + players.get(0).name);
+                        System.out.println("P1 role: " + players.get(0).role);
+                        players.get(0).shout();
+                        System.out.println("P2 name: " + players.get(1).name);
+                        System.out.println("P2 role: " + players.get(1).role);
+                        players.get(1).shout();
+
+                    }
+
+                    case ROLE -> game.roleToPlay();
+                    case HELP -> game.possibleCommands();
+                    case EXIT -> {
+                        System.out.println("Exiting game...");
+                        letsPlay = false;
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input, try again.");
+            }
+        }
+    }
+}
