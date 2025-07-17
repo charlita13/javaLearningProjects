@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class GameSetting {
+
+    // give me all possible commands
+    public void possibleCommands() {
+        System.out.println("Possible commands: ");
+
+        for (Command c : Command.values()) {
+            System.out.println(c + ": " + c.getDescription());
+        };
+        System.out.println();
+    }
+
+    // show me all roles to play
+    public void roleToPlay() {
+        System.out.println("Possible roles: ");
+
+        for (RoleToPlay r : RoleToPlay.values()) {
+            System.out.println(r + ": " + r.getDescription());
+        };
+        System.out.println();
+    }
+
+    // validate the name nad the role of a player and create a new character
+    public static String[] playerValidation(Scanner scanner, int playerNumber) {
+        System.out.println("Insert name of the player: ");
+        String playerName = scanner.nextLine();
+        playerName = playerName.isEmpty() ? "player" + playerNumber : playerName;
+
+        System.out.println("Select role for player " + playerName + " (mage, druid, warrior): ");
+        String playerRole = scanner.nextLine();
+        playerRole = playerRole.toUpperCase().trim();
+
+        boolean isValidRole = false;
+        while (! isValidRole) {
+            try {
+                RoleToPlay action = RoleToPlay.valueOf(playerRole);
+
+                switch (action) {
+                    case DRUID -> {
+                        playerRole = "druid";
+                        isValidRole = true;
+                    }
+                    case MAGE -> {
+                        playerRole = "mage";
+                        isValidRole = true;
+                    }
+                    case WARRIOR -> {
+                        playerRole = "warrior";
+                        isValidRole = true;
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Select role for player " + playerName + " (mage, druid, warrior): ");
+                playerRole = scanner.nextLine();
+                playerRole = playerRole.toUpperCase().trim();
+            }
+        }
+        return new String[]{playerName, playerRole};
+    }
+}
