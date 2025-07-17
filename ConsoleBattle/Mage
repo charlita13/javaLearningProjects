@@ -1,0 +1,10 @@
+public class Mage extends Character {
+
+    Mage (String name, String role) {
+        super(name, role);
+    }
+
+    public void shout() {
+        System.out.println("jsem mage");
+    }
+}
