@@ -1,0 +1,16 @@
+public enum Command {
+    PLAY("Start game"),
+    ROLE("Show possible characters to play"),
+    HELP("Show all possible commands"),
+    EXIT("Exit the program");
+
+    private final String description;
+
+    Command(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
