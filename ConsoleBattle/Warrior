@@ -1,0 +1,10 @@
+public class Warrior extends Character {
+
+    Warrior (String name, String role) {
+        super(name, role);
+    }
+
+    public void shout() {
+        System.out.println("jsem warrior");
+    }
+}
