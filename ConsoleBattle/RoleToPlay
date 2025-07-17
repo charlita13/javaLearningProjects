@@ -1,0 +1,23 @@
+public enum RoleToPlay {
+    MAGE("can cause the highest damage in range combat and also can stun his opponent. But is very vulnerable in close combat and does not have high health."),
+    DRUID("decent damage in range and close combat. Can heal himself. The fastest role with average health."),
+    WARRIOR("can cause the highest damage in close combat and also can charge his opponent. Highest health, but quite slow.");
+
+    private final String description;
+
+    RoleToPlay(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Character createCharacter(String name) {
+        return switch (this) {
+            case MAGE -> new Mage(name, this.name().toLowerCase());
+            case DRUID -> new Druid(name, this.name().toLowerCase());
+            case WARRIOR -> new Warrior(name, this.name().toLowerCase());
+        };
+    }
+}
