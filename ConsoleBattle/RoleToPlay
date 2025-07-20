@@ -15,9 +15,9 @@ public enum RoleToPlay {
 
     public Character createCharacter(String name) {
         return switch (this) {
-            case MAGE -> new Mage(name, this.name().toLowerCase());
-            case DRUID -> new Druid(name, this.name().toLowerCase());
-            case WARRIOR -> new Warrior(name, this.name().toLowerCase());
+            case MAGE -> new Mage(name, this.name().toLowerCase(), 80, 5, 35, 2, 3);
+            case DRUID -> new Druid(name, this.name().toLowerCase(), 100, 25, 20, 3, 3);
+            case WARRIOR -> new Warrior(name, this.name().toLowerCase(), 120, 35, 5, 1, 3);
         };
     }
 }
