@@ -43,6 +43,7 @@ public class GameSetting {
                 System.out.println("Invalid input. Select role for player " + playerName + " (mage, druid, warrior): ");
             }
         }
+
         return new String[]{playerName, playerRole};
     }
 }
