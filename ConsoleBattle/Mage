@@ -1,9 +1,10 @@
 public class Mage extends Character {
 
-    Mage (String name, String role) {
-        super(name, role);
+    Mage (String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move) {
+        super(name, role, health, closeAttack, rangeAttack, speed, move);
     }
 
+    @Override
     public void shout() {
         System.out.println("jsem mage");
     }
