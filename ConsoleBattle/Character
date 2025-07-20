@@ -2,22 +2,24 @@ public class Character {
 
     String name;
     String role;
+    int health;
+    int closeAttack;
+    int rangeAttack;
+    int speed;
+    int move;
 
     // konstruktor
-    public Character(String name, String role) {
+    public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move) {
         this.name = name;
         this.role = role;
+        this.health = health;
+        this.closeAttack = closeAttack;
+        this.rangeAttack = rangeAttack;
+        this.speed = speed;
+        this.move = move;
     }
 
     public void shout() {
         System.out.println("jsem obecna postava");
     }
 }
-
-/*
-health
-range attack
-close attack
-spell attack
-special move (polymorph, charge, heal)
- */
