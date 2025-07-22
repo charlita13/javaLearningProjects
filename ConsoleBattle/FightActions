@@ -1,0 +1,20 @@
+public enum FightActions {
+    FORWARD("Use your turn to get closer to the enemy"),
+    AWAY("Use your turn to get away from the enemy"),
+    SHOOT("Use your range attack power and shoot on the enemy"),
+    ATTACK("Use your close attack power and hit the enemy"),
+    SPECIAL("Use your special class ability"),
+    GIVEUP("Give up"),
+    STATS("Show current health, distance, and cooldown of special abilities for you and your enemy."),
+    HELP("Show all possible commands");
+
+    private final String description;
+
+    FightActions(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
