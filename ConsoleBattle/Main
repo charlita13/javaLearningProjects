@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,16 +8,20 @@ public class Main {
         // hlavní parametry
         Scanner scanner = new Scanner(System.in);
         GameSetting game = new GameSetting();
+        boolean letsChoose = true;
         boolean letsPlay = true;
 
         // uvítání a úvodní informace
-        System.out.println("================================");
-        System.out.println("  WELCOME TO BATTLE SIMULATOR");
-        System.out.println("================================\n");
-        game.possibleCommands();
+        System.out.println("""
+        ================================
+          WELCOME TO BATTLE SIMULATOR
+        ================================
+        """);
+
+        game.possibleGameCommands();
 
         // hlavní cyklus
-        while (letsPlay) {
+        while (letsChoose) {
             System.out.println("Choose your action:");
             String input = scanner.nextLine().trim().toUpperCase();
 
@@ -34,10 +37,15 @@ public class Main {
                         List<Character> players = new ArrayList<>();
 
                         // založení hráčů - získám roli a jméno
+                        String[] playerValues = new String[0];
+
                         for (int i = 1; i <= 2; i++) {
                             System.out.println("Player " + i + " setting: ");
-                            String[] playerValues = GameSetting.playerValidation(scanner, i);
-
+                            if (i == 1) {
+                                playerValues = GameSetting.validatePlayer(scanner, i, "");
+                            } else {
+                                playerValues = GameSetting.validatePlayer(scanner, i, players.get(0).getName());
+                            }
                             RoleToPlay role = RoleToPlay.valueOf(playerValues[1].toUpperCase());
 
                             // založím postavu se všemi staty
@@ -45,17 +53,58 @@ public class Main {
                             players.add(player);
                         }
 
-                        // kontrola duplicity jména
-                        while (players.get(0).name.equals(players.get(1).name)) {
-                            System.out.println("Same name for both players is confusing. Player 2, please enter new name:");
-                            players.get(1).name = scanner.nextLine();
+
+                        // vypíšu možné povely pro boj
+                        System.out.println("Lets the fight begin !\n");
+                        System.out.printf("*** %s (%s) VS %s (%s) ***\n\n", players.get(0).getName(), players.get(0).getRole(), players.get(1).getName(), players.get(1).getRole());
+
+                        game.possibleFightCommands();
+
+                        // hlavní cyklus pro boj
+                        while (letsPlay) {
+                            System.out.println("Choose your action:");
+                            String inputFight = scanner.nextLine().trim().toUpperCase();
+
+                            // hlavní přepínač pro pokyny
+                            try {
+                                FightActions actionFight = FightActions.valueOf(inputFight);
+
+
+                                switch (actionFight) {
+                                    case FORWARD -> System.out.println("forward");
+                                    case AWAY -> System.out.println("away");
+                                    case SHOOT -> System.out.println("shoot");
+                                    case ATTACK -> System.out.println("attack");
+                                    case SPECIAL -> System.out.println("special");
+                                    case GIVEUP -> System.out.println("giveup");
+                                    case STATS -> System.out.println("stats");
+                                    case HELP -> System.out.println("help");
+                                }
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("Invalid input, try again.");
+                            }
                         }
+
+
+                        /*
+                        int round = players.get(0).getSpeed() >= players.get(1).getSpeed() ? 1 : 2;
+
+                        while (letsPlay) {
+                            if (round % 2 != 0) {
+                                System.out.println("player1");
+                            } else {
+                                System.out.println("PLAYER2");
+                            }
+                            round++;
+                        }
+                        */
+
                     }
                     case ROLE -> game.roleToPlay();
-                    case HELP -> game.possibleCommands();
+                    case HELP -> game.possibleGameCommands();
                     case EXIT -> {
                         System.out.println("Exiting game...");
-                        letsPlay = false;
+                        letsChoose = false;
                     }
                 }
             } catch (IllegalArgumentException e) {
