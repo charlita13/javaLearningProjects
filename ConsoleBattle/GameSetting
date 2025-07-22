@@ -1,14 +1,24 @@
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class GameSetting {
 
     // show me all commands
-    public void possibleCommands() {
+    public void possibleGameCommands() {
         System.out.println("Possible commands: ");
 
         for (Command c : Command.values()) {
             System.out.println(c + ": " + c.getDescription());
-        };
+        }
+        System.out.println();
+    }
+
+    public void possibleFightCommands() {
+        System.out.println("These are all possible commands during the fight: ");
+
+        for (FightActions f : FightActions.values()) {
+            System.out.println(f + ": " + f.getDescription());
+        }
         System.out.println();
     }
 
@@ -18,15 +28,23 @@ public class GameSetting {
 
         for (RoleToPlay r : RoleToPlay.values()) {
             System.out.println(r + ": " + r.getDescription());
-        };
+        }
         System.out.println();
     }
 
     // validate the name nad the role of a player and return name and role
-    public static String[] playerValidation(Scanner scanner, int playerNumber) {
-        System.out.println("Insert name of the player: ");
+    public static String[] validatePlayer(Scanner scanner, int playerNumber, String previousPlayerName) {
+        System.out.println("Enter player name: ");
         String playerName = scanner.nextLine();
         playerName = playerName.isEmpty() ? "player" + playerNumber : playerName;
+
+        if (playerNumber == 2) {
+            while (playerName.toLowerCase().trim() .equals(previousPlayerName.trim().toLowerCase())) {
+                System.out.println("Same name for both players is confusing. Player 2, please enter new name:");
+                playerName = scanner.nextLine();
+                playerName = playerName.isEmpty() ? "player" + playerNumber : playerName;
+            }
+        }
 
         String playerRole = "";
         boolean isValidRole = false;
