@@ -1,12 +1,12 @@
 public class Character {
 
-    String name;
-    String role;
-    int health;
-    int closeAttack;
-    int rangeAttack;
-    int speed;
-    int move;
+    private String name;
+    private String role;
+    private int health;
+    private int closeAttack;
+    private int rangeAttack;
+    private int speed;
+    private int move;
 
     // konstruktor
     public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move) {
@@ -17,9 +17,32 @@ public class Character {
         this.rangeAttack = rangeAttack;
         this.speed = speed;
         this.move = move;
+
     }
 
     public void shout() {
         System.out.println("jsem obecna postava");
+    }
+
+    public String getName() {
+        return name;
+    }
+    public String getRole() {
+        return role;
+    }
+    public int getHealth() {
+        return health;
+    }
+    public int getCloseAttack() {
+        return closeAttack;
+    }
+    public int getRangeAttack() {
+        return rangeAttack;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public int getMove() {
+        return move;
     }
 }
