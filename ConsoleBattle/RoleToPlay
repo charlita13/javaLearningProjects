@@ -1,7 +1,7 @@
 public enum RoleToPlay {
-    MAGE("can cause the highest damage in range combat and also can stun his opponent. But is very vulnerable in close combat and does not have high health.", 80, 5, 35, 2, 3),
-    DRUID("decent damage in range and close combat. Can heal himself. The fastest role with average health.", 100, 25, 20, 3, 3),
-    WARRIOR("can cause the highest damage in close combat and also can charge his opponent. Highest health, but quite slow.", 120, 35, 5, 1, 3);
+    MAGE("can cause the highest damage in range combat and also can stun his opponent. But is very vulnerable in close combat and does not have high health.", 80, 5, 35, 2, 3, "polymorph"),
+    DRUID("decent damage in range and close combat. Can heal himself. The fastest role with average health.", 100, 25, 20, 3, 3, "heal"),
+    WARRIOR("can cause the highest damage in close combat and also can charge his opponent. Highest health, but quite slow.", 120, 35, 5, 1, 3, "charge");
 
     private final String description;
     private final int health;
@@ -9,14 +9,16 @@ public enum RoleToPlay {
     private final int rangeAttack;
     private final int speed;
     private final int move;
+    private final String specialAbility;
 
-    RoleToPlay(String description, int health, int closeAttack, int rangeAttack, int speed, int move) {
+    RoleToPlay(String description, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility) {
         this.description = description;
         this.health = health;
         this.closeAttack = closeAttack;
         this.rangeAttack = rangeAttack;
         this.speed = speed;
         this.move = move;
+        this.specialAbility = specialAbility;
     }
 
     public String getDescription() {
@@ -25,9 +27,9 @@ public enum RoleToPlay {
 
     public Character createCharacter(String name) {
         return switch (this) {
-            case MAGE -> new Mage(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move);
-            case DRUID -> new Druid(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move);
-            case WARRIOR -> new Warrior(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move);
+            case MAGE -> new Mage(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move, specialAbility);
+            case DRUID -> new Druid(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move, specialAbility);
+            case WARRIOR -> new Warrior(name, this.name().toLowerCase(), health, closeAttack, rangeAttack, speed, move, specialAbility);
         };
     }
 }
