@@ -7,9 +7,10 @@ public class Character {
     private int rangeAttack;
     private int speed;
     private int move;
+    private String specialAbility;
 
     // konstruktor
-    public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move) {
+    public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility) {
         this.name = name;
         this.role = role;
         this.health = health;
@@ -17,6 +18,7 @@ public class Character {
         this.rangeAttack = rangeAttack;
         this.speed = speed;
         this.move = move;
+        this.specialAbility = specialAbility;
 
     }
 
@@ -44,5 +46,9 @@ public class Character {
     }
     public int getMove() {
         return move;
+    }
+
+    public String getSpecialAbility() {
+        return name;
     }
 }
