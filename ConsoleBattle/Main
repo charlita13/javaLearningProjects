@@ -53,24 +53,29 @@ public class Main {
                             players.add(player);
                         }
 
-
                         // vypíšu možné povely pro boj
-                        System.out.println("Lets the fight begin !\n");
-                        System.out.printf("*** %s (%s) VS %s (%s) ***\n\n", players.get(0).getName(), players.get(0).getRole(), players.get(1).getName(), players.get(1).getRole());
-
+                        game.showStartingStats(players.get(0), players.get(1));
                         game.possibleFightCommands();
+
+                        System.out.println("Lets the fight begin !\n");
+                        System.out.printf("*** %s VS %s ***\n\n", players.get(0).getName(), players.get(1).getName());
 
                         // hlavní cyklus pro boj
                         while (letsPlay) {
-                            System.out.println("Choose your action:");
-                            String inputFight = scanner.nextLine().trim().toUpperCase();
+
+                            // kdo má první tah
+                            int round = game.whoStarts(players.get(0), players.get(1));
+
+                            // zadání povelu od hráče
+                            String inputFight = game.playerMakeAnAction(round, scanner, players.get(0), players.get(1));
 
                             // hlavní přepínač pro pokyny
                             try {
                                 FightActions actionFight = FightActions.valueOf(inputFight);
 
-
                                 switch (actionFight) {
+
+                                    // Todo začni definovat samotné akce při hře + řeš vzdálenost mezi hráči a cooldowny
                                     case FORWARD -> System.out.println("forward");
                                     case AWAY -> System.out.println("away");
                                     case SHOOT -> System.out.println("shoot");
@@ -84,21 +89,6 @@ public class Main {
                                 System.out.println("Invalid input, try again.");
                             }
                         }
-
-
-                        /*
-                        int round = players.get(0).getSpeed() >= players.get(1).getSpeed() ? 1 : 2;
-
-                        while (letsPlay) {
-                            if (round % 2 != 0) {
-                                System.out.println("player1");
-                            } else {
-                                System.out.println("PLAYER2");
-                            }
-                            round++;
-                        }
-                        */
-
                     }
                     case ROLE -> game.roleToPlay();
                     case HELP -> game.possibleGameCommands();
