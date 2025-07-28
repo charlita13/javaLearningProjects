@@ -98,4 +98,15 @@ public class GameSetting {
         String inputFight = scanner.nextLine().trim().toUpperCase();
         return inputFight;
     }
+
+    public boolean giveUp(int round, Character playerOne, Character playerTwo) {
+        if (round % 2 == 0) {
+            System.out.println("Player " + playerTwo.getName() + " gave up! The winner is " + playerOne.getName());
+        } else {
+            System.out.println("Player " + playerOne.getName() + " gave up! The winner is " + playerTwo.getName());
+        }
+        System.out.println("The fight is over!\n");
+        possibleGameCommands();
+        return false;
+    }
 }
