@@ -10,6 +10,7 @@ public class Main {
         GameSetting game = new GameSetting();
         boolean letsChoose = true;
         boolean letsPlay = true;
+        int round = 0;
 
         // uvítání a úvodní informace
         System.out.println("""
@@ -64,26 +65,43 @@ public class Main {
                         while (letsPlay) {
 
                             // kdo má první tah
-                            int round = game.whoStarts(players.get(0), players.get(1));
-
+                            if (round == 0) {
+                                round = game.whoStarts(players.get(0), players.get(1));
+                            }
                             // zadání povelu od hráče
                             String inputFight = game.playerMakeAnAction(round, scanner, players.get(0), players.get(1));
 
                             // hlavní přepínač pro pokyny
                             try {
                                 FightActions actionFight = FightActions.valueOf(inputFight);
+                                System.out.println("kolo" + round);
 
                                 switch (actionFight) {
-
-                                    // Todo začni definovat samotné akce při hře + řeš vzdálenost mezi hráči a cooldowny
-                                    case FORWARD -> System.out.println("forward");
-                                    case AWAY -> System.out.println("away");
-                                    case SHOOT -> System.out.println("shoot");
-                                    case ATTACK -> System.out.println("attack");
-                                    case SPECIAL -> System.out.println("special");
-                                    case GIVEUP -> System.out.println("giveup");
-                                    case STATS -> System.out.println("stats");
-                                    case HELP -> System.out.println("help");
+                                    case FORWARD -> {
+                                        System.out.println("forward");          // ToDo
+                                        round++;
+                                    }
+                                    case AWAY -> {
+                                        System.out.println("away");           // ToDo
+                                        round++;
+                                    }
+                                    case SHOOT -> {
+                                        System.out.println("shoot");           // ToDo
+                                        round++;
+                                    }
+                                    case ATTACK -> {
+                                        System.out.println("attack");           // ToDo
+                                        round++;
+                                    }
+                                    case SPECIAL -> {
+                                        System.out.println("special");           // ToDo
+                                        round++;
+                                    }
+                                    case GIVEUP -> letsPlay = game.giveUp(round, players.get(0), players.get(1));
+                                    case STATS -> {
+                                        System.out.println("stats");           // ToDo
+                                    }
+                                    case HELP -> game.possibleFightCommands();
                                 }
                             } catch (IllegalArgumentException e) {
                                 System.out.println("Invalid input, try again.");
@@ -94,7 +112,9 @@ public class Main {
                     case HELP -> game.possibleGameCommands();
                     case EXIT -> {
                         System.out.println("Exiting game...");
+                        round = 0;
                         letsChoose = false;
+
                     }
                 }
             } catch (IllegalArgumentException e) {
