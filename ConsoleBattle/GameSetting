@@ -1,3 +1,4 @@
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -66,18 +67,20 @@ public class GameSetting {
     }
 
     public void showPlayerStats(Character playerOne) {
-        System.out.println("Player " + playerOne.getName() + " stats:");
+        System.out.println("Player " + playerOne.getName() + " (" + playerOne.getRole() + ") stats:");
         System.out.println("Health: " + playerOne.getHealth());
         System.out.println("Close attack: " + playerOne.getCloseAttack());
         System.out.println("Range attack: " + playerOne.getRangeAttack());
         System.out.println("Move: " + playerOne.getMove());
         System.out.println("Special ability: " + playerOne.getSpecialAbility());
+        System.out.println("Special ability cooldown: " + playerOne.getCooldownSpecialAbility() + " rounds");
         System.out.println();
     }
 
-    public void showStartingStats(Character playerOne, Character playerTwo) {
+    public void showStats(Character playerOne, Character playerTwo, int startingDistanceBetweenPLayers) {
         showPlayerStats(playerOne);
         showPlayerStats(playerTwo);
+        System.out.println("Current distance between players: " + startingDistanceBetweenPLayers + "\n\n");
         }
 
     public int whoStarts(Character playerOne, Character playerTwo) {
@@ -108,5 +111,30 @@ public class GameSetting {
         System.out.println("The fight is over!\n");
         possibleGameCommands();
         return false;
+    }
+
+    public Character updatePlayerStats(Character player, int newHealthValue) {
+        player.setHealth(newHealthValue);
+        return player;
+    }
+
+    public int updateDistanceForward(int distance, Character player) {
+        distance = distance - player.getMove();
+        System.out.println(player.getName() + " moved towards the enemy. New distance between them is " + distance + ".");
+        return distance;
+    }
+
+    public int updateDistanceAway(int distance, Character player) {
+        distance = distance + player.getMove();
+        System.out.println(player.getName() + " moved away from his enemy. New distance between them is " + distance + ".");
+        return distance;
+    }
+
+    public Character whoIsActive(int round, Character playerOne, Character playerTwo) {
+        if (round % 2 == 0) {
+            return playerTwo;
+        } else {
+            return playerOne;
+        }
     }
 }
