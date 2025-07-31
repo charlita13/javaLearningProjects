@@ -8,6 +8,7 @@ public class Character {
     private int speed;
     private int move;
     private String specialAbility;
+    private int cooldownSpecialAbility;
 
     // konstruktor
     public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility) {
@@ -19,6 +20,7 @@ public class Character {
         this.speed = speed;
         this.move = move;
         this.specialAbility = specialAbility;
+        this.cooldownSpecialAbility = 0;
 
     }
 
@@ -50,5 +52,13 @@ public class Character {
 
     public String getSpecialAbility() {
         return specialAbility;
+    }
+
+    public int getCooldownSpecialAbility() {
+        return cooldownSpecialAbility;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
