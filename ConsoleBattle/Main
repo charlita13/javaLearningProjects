@@ -9,8 +9,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         GameSetting game = new GameSetting();
         boolean letsChoose = true;
-        boolean letsPlay = true;
-        int round = 0;
 
         // uvítání a úvodní informace
         System.out.println("""
@@ -33,6 +31,9 @@ public class Main {
                 switch (action) {
                     // hlavní hra
                     case PLAY -> {
+                        boolean letsPlay = true;
+                        int round = 0;
+                        int startingDistanceBetweenPLayers = 5;
 
                         // založení listu v kterém jsou uloženi hráči
                         List<Character> players = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Main {
                         }
 
                         // vypíšu možné povely pro boj
-                        game.showStartingStats(players.get(0), players.get(1));
+                        game.showStats(players.get(0), players.get(1), startingDistanceBetweenPLayers);
                         game.possibleFightCommands();
 
                         System.out.println("Lets the fight begin !\n");
@@ -68,21 +69,22 @@ public class Main {
                             if (round == 0) {
                                 round = game.whoStarts(players.get(0), players.get(1));
                             }
+
+                            Character activePlayer = game.whoIsActive(round, players.get(0), players.get(1));
                             // zadání povelu od hráče
                             String inputFight = game.playerMakeAnAction(round, scanner, players.get(0), players.get(1));
 
                             // hlavní přepínač pro pokyny
                             try {
                                 FightActions actionFight = FightActions.valueOf(inputFight);
-                                System.out.println("kolo" + round);
 
                                 switch (actionFight) {
                                     case FORWARD -> {
-                                        System.out.println("forward");          // ToDo
+                                        startingDistanceBetweenPLayers = game.updateDistanceForward(startingDistanceBetweenPLayers, activePlayer);
                                         round++;
                                     }
                                     case AWAY -> {
-                                        System.out.println("away");           // ToDo
+                                        startingDistanceBetweenPLayers = game.updateDistanceAway(startingDistanceBetweenPLayers, activePlayer);
                                         round++;
                                     }
                                     case SHOOT -> {
@@ -99,7 +101,7 @@ public class Main {
                                     }
                                     case GIVEUP -> letsPlay = game.giveUp(round, players.get(0), players.get(1));
                                     case STATS -> {
-                                        System.out.println("stats");           // ToDo
+                                        game.showStats(players.get(0), players.get(1), startingDistanceBetweenPLayers);
                                     }
                                     case HELP -> game.possibleFightCommands();
                                 }
@@ -112,7 +114,6 @@ public class Main {
                     case HELP -> game.possibleGameCommands();
                     case EXIT -> {
                         System.out.println("Exiting game...");
-                        round = 0;
                         letsChoose = false;
 
                     }
