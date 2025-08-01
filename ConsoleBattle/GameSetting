@@ -80,7 +80,7 @@ public class GameSetting {
     public void showStats(Character playerOne, Character playerTwo, int startingDistanceBetweenPLayers) {
         showPlayerStats(playerOne);
         showPlayerStats(playerTwo);
-        System.out.println("Current distance between players: " + startingDistanceBetweenPLayers + "\n\n");
+        System.out.println("Current distance between players: " + startingDistanceBetweenPLayers + "\n");
         }
 
     public int whoStarts(Character playerOne, Character playerTwo) {
@@ -119,13 +119,25 @@ public class GameSetting {
     }
 
     public int updateDistanceForward(int distance, Character player) {
+        if (distance == 0) {
+            System.out.println("You cannot get closer. Distance is already 0.");
+            return distance;
+        }
         distance = distance - player.getMove();
+        if (distance < 0) {
+            distance = 0;
+        }
         System.out.println(player.getName() + " moved towards the enemy. New distance between them is " + distance + ".");
         return distance;
     }
 
     public int updateDistanceAway(int distance, Character player) {
         distance = distance + player.getMove();
+        if (distance >  20) {
+            System.out.println("You cannot get further. Distance is 20 and it is max distance.");
+            distance = 20;
+            return distance;
+        }
         System.out.println(player.getName() + " moved away from his enemy. New distance between them is " + distance + ".");
         return distance;
     }
@@ -135,6 +147,33 @@ public class GameSetting {
             return playerTwo;
         } else {
             return playerOne;
+        }
+    }
+
+    public Character attackOnYourEnemy(Character attackingPlayer, Character targetPlayer, String attackStyle) {
+        int newHealthValue;
+        if (attackStyle.toLowerCase().trim().equals("attack")) {
+            newHealthValue = targetPlayer.getHealth() - attackingPlayer.getCloseAttack();
+        } else {
+            newHealthValue = targetPlayer.getHealth() - attackingPlayer.getRangeAttack();
+        }
+        if (newHealthValue <= 0) {
+            System.out.println(targetPlayer.getName() + " was hit. No HP left!");
+            System.out.println("*** The fight is over. The winner is " + attackingPlayer.getName() + ". His opponent " + targetPlayer.getName() + " was defeated! ***\n");
+            System.out.println("New game ?");
+        } else {
+            System.out.println(targetPlayer.getName() + " was hit. HP left: " + newHealthValue);
+        }
+        targetPlayer.setHealth(newHealthValue);
+        return targetPlayer;
+    }
+
+    public boolean isHeDead(int hpNumber) {
+        if (hpNumber <= 0) {
+            possibleGameCommands();
+            return false;
+        } else {
+            return true;
         }
     }
 }
