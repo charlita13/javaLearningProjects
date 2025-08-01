@@ -71,6 +71,8 @@ public class Main {
                             }
 
                             Character activePlayer = game.whoIsActive(round, players.get(0), players.get(1));
+                            Character passivePlayer = activePlayer.equals(players.get(0)) ? players.get(1) : players.get(0);
+
                             // zadání povelu od hráče
                             String inputFight = game.playerMakeAnAction(round, scanner, players.get(0), players.get(1));
 
@@ -88,15 +90,27 @@ public class Main {
                                         round++;
                                     }
                                     case SHOOT -> {
-                                        System.out.println("shoot");           // ToDo
+                                        if (startingDistanceBetweenPLayers < 3) {
+                                            System.out.println("You are too close to your opponent. Get closer to shoot.\n(min distance to shoot is 3 and your current distance is " + startingDistanceBetweenPLayers + ")");
+                                        } else if (startingDistanceBetweenPLayers > 10) {
+                                            System.out.println("You are too far from your opponent. Get closer to shoot.\n(max distance to shoot is 10 and your current distance is " + startingDistanceBetweenPLayers + ")");
+                                        } else {
+                                            game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
+                                            letsPlay = game.isHeDead(passivePlayer.getHealth());
+                                            }
                                         round++;
-                                    }
+                                        }
                                     case ATTACK -> {
-                                        System.out.println("attack");           // ToDo
+                                        if (startingDistanceBetweenPLayers > 1) {
+                                            System.out.println("You are too far from your opponent. Get closer to attack.\n(distance to fight in close combat has to be 0 or 1, your current distance is " + startingDistanceBetweenPLayers + ")");
+                                        } else {
+                                            game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
+                                            letsPlay = game.isHeDead(passivePlayer.getHealth());
+                                        }
                                         round++;
                                     }
                                     case SPECIAL -> {
-                                        System.out.println("special");           // ToDo
+                                        System.out.println("special");           // ToDo special + check an pasivitu - x kol bez dmg = konec hry
                                         round++;
                                     }
                                     case GIVEUP -> letsPlay = game.giveUp(round, players.get(0), players.get(1));
