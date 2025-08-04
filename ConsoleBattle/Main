@@ -34,6 +34,7 @@ public class Main {
                         boolean letsPlay = true;
                         int round = 0;
                         int startingDistanceBetweenPLayers = 5;
+                        int passivityCheck = 1;
 
                         // založení listu v kterém jsou uloženi hráči
                         List<Character> players = new ArrayList<>();
@@ -76,6 +77,9 @@ public class Main {
                             // zadání povelu od hráče
                             String inputFight = game.playerMakeAnAction(round, scanner, players.get(0), players.get(1));
 
+                            // kontrola pasivity
+                            letsPlay = game.passivityCheck(passivityCheck);
+
                             // hlavní přepínač pro pokyny
                             try {
                                 FightActions actionFight = FightActions.valueOf(inputFight);
@@ -84,17 +88,22 @@ public class Main {
                                     case FORWARD -> {
                                         startingDistanceBetweenPLayers = game.updateDistanceForward(startingDistanceBetweenPLayers, activePlayer);
                                         round++;
+                                        passivityCheck++;
                                     }
                                     case AWAY -> {
                                         startingDistanceBetweenPLayers = game.updateDistanceAway(startingDistanceBetweenPLayers, activePlayer);
                                         round++;
+                                        passivityCheck++;
                                     }
                                     case SHOOT -> {
                                         if (startingDistanceBetweenPLayers < 3) {
                                             System.out.println("You are too close to your opponent. Get closer to shoot.\n(min distance to shoot is 3 and your current distance is " + startingDistanceBetweenPLayers + ")");
+                                            passivityCheck++;
                                         } else if (startingDistanceBetweenPLayers > 10) {
                                             System.out.println("You are too far from your opponent. Get closer to shoot.\n(max distance to shoot is 10 and your current distance is " + startingDistanceBetweenPLayers + ")");
+                                            passivityCheck++;
                                         } else {
+                                            passivityCheck = 0;
                                             game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
                                             letsPlay = game.isHeDead(passivePlayer.getHealth());
                                             }
@@ -102,15 +111,17 @@ public class Main {
                                         }
                                     case ATTACK -> {
                                         if (startingDistanceBetweenPLayers > 1) {
+                                            passivityCheck++;
                                             System.out.println("You are too far from your opponent. Get closer to attack.\n(distance to fight in close combat has to be 0 or 1, your current distance is " + startingDistanceBetweenPLayers + ")");
                                         } else {
+                                            passivityCheck = 0;
                                             game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
                                             letsPlay = game.isHeDead(passivePlayer.getHealth());
                                         }
                                         round++;
                                     }
                                     case SPECIAL -> {
-                                        System.out.println("special");           // ToDo special + check an pasivitu - x kol bez dmg = konec hry
+                                        System.out.println("special");           // ToDo special i s pasivity checkem
                                         round++;
                                     }
                                     case GIVEUP -> letsPlay = game.giveUp(round, players.get(0), players.get(1));
