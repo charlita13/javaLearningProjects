@@ -176,4 +176,18 @@ public class GameSetting {
             return true;
         }
     }
+
+    public boolean passivityCheck(int passiveRoundNumber) {
+        if (passiveRoundNumber >= 8 && passiveRoundNumber < 12) {
+            System.out.println("WARNING. There was no fight for " + passiveRoundNumber + " rounds!");
+            System.out.println("If the number raises to 12, the fight will be over.");
+            return true;
+        } else if (passiveRoundNumber >= 12) {
+            System.out.println("The fight is over due the passivity of both players!!\n");
+            possibleGameCommands();
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
