@@ -126,8 +126,16 @@ public class Main {
                                     }
                                     case SPECIAL -> {
                                         if (activePlayer.getCooldownSpecialAbility() == 0) {
-                                            game.specialActionExecution(activePlayer);               // ToDo special - zbývá exekuce akcí (+hp, charge a polymorph)
-                                            activePlayer.setCooldownSpecialAbility(3);
+                                            if (activePlayer.getRole().equals("druid")) {
+                                                activePlayer = game.specialActionDruid(activePlayer);
+                                                activePlayer.setCooldownSpecialAbility(3);
+                                            } else if (activePlayer.getRole().equals("mage")) {
+                                                round = game.specialActionMage(activePlayer, round);
+                                                activePlayer.setCooldownSpecialAbility(3);
+                                            }  else {
+                                                startingDistanceBetweenPLayers = game.specialActionWarrior(activePlayer, startingDistanceBetweenPLayers);
+                                                activePlayer.setCooldownSpecialAbility(3);
+                                            }
                                         } else {
                                             System.out.println("Spell is not ready yet. (CD remaining " + (activePlayer.getCooldownSpecialAbility()) + ")");
                                             activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
