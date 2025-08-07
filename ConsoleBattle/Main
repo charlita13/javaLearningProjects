@@ -87,11 +87,13 @@ public class Main {
                                 switch (actionFight) {
                                     case FORWARD -> {
                                         startingDistanceBetweenPLayers = game.updateDistanceForward(startingDistanceBetweenPLayers, activePlayer);
+                                        activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
                                         round++;
                                         passivityCheck++;
                                     }
                                     case AWAY -> {
                                         startingDistanceBetweenPLayers = game.updateDistanceAway(startingDistanceBetweenPLayers, activePlayer);
+                                        activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
                                         round++;
                                         passivityCheck++;
                                     }
@@ -107,6 +109,7 @@ public class Main {
                                             game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
                                             letsPlay = game.isHeDead(passivePlayer.getHealth());
                                             }
+                                        activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
                                         round++;
                                         }
                                     case ATTACK -> {
@@ -118,10 +121,17 @@ public class Main {
                                             game.attackOnYourEnemy(activePlayer, passivePlayer, inputFight);
                                             letsPlay = game.isHeDead(passivePlayer.getHealth());
                                         }
+                                        activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
                                         round++;
                                     }
                                     case SPECIAL -> {
-                                        System.out.println("special");           // ToDo special i s pasivity checkem
+                                        if (activePlayer.getCooldownSpecialAbility() == 0) {
+                                            game.specialActionExecution(activePlayer);               // ToDo special - zbývá exekuce akcí (+hp, charge a polymorph)
+                                            activePlayer.setCooldownSpecialAbility(3);
+                                        } else {
+                                            System.out.println("Spell is not ready yet. (CD remaining " + (activePlayer.getCooldownSpecialAbility()) + ")");
+                                            activePlayer.setCooldownSpecialAbility(game.cooldownSet(activePlayer));
+                                        }
                                         round++;
                                     }
                                     case GIVEUP -> letsPlay = game.giveUp(round, players.get(0), players.get(1));
