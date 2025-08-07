@@ -190,4 +190,25 @@ public class GameSetting {
             return true;
         }
     }
+
+    public int cooldownSet(Character player) {
+        int newValue;
+        if (player.getCooldownSpecialAbility() > 0) {
+            newValue = player.getCooldownSpecialAbility() - 1;
+        } else {
+            newValue = 0;
+        }
+        return newValue;
+    }
+
+    public void specialActionExecution(Character activePlayer) {
+        System.out.println(activePlayer.getName() + (" (") + activePlayer.getRole() + ") used his special move!" );
+        if (activePlayer.getRole().equals("mage")) {
+            System.out.println("Opponent is shifted and cannot do any action next turn !");
+        } else if (activePlayer.getRole().equals("druid")) {
+            System.out.println("You healed yourself for 30hp !");
+        } else {
+            System.out.println("You charged your enemy.");
+        }
+    }
 }
