@@ -201,14 +201,31 @@ public class GameSetting {
         return newValue;
     }
 
-    public void specialActionExecution(Character activePlayer) {
+    public Character specialActionDruid(Character activePlayer) {
         System.out.println(activePlayer.getName() + (" (") + activePlayer.getRole() + ") used his special move!" );
-        if (activePlayer.getRole().equals("mage")) {
-            System.out.println("Opponent is shifted and cannot do any action next turn !");
-        } else if (activePlayer.getRole().equals("druid")) {
-            System.out.println("You healed yourself for 30hp !");
-        } else {
-            System.out.println("You charged your enemy.");
+        activePlayer.setHealth(activePlayer.getHealth() + 30);
+        if (activePlayer.getHealth() > 100) {
+            activePlayer.setHealth(100);
         }
+        System.out.println("You healed yourself. Your HP is " + activePlayer.getHealth());
+        return activePlayer;
+    }
+
+    public int specialActionMage(Character activePlayer, int round) {
+        System.out.println(activePlayer.getName() + (" (") + activePlayer.getRole() + ") used his special move!" );
+        System.out.println("Your opponent cannot play next round because of polymorph!");
+        round++;
+        return round;
+    }
+
+    public int specialActionWarrior(Character activePlayer, int distance) {
+        System.out.println(activePlayer.getName() + (" (") + activePlayer.getRole() + ") used his special move!" );
+        distance = distance - 5;
+        if (distance < 0) {
+            distance = 0;
+        }
+
+        System.out.println("You charged your oponent. Current distance between pLayers is " + distance);
+        return distance;
     }
 }
