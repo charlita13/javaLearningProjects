@@ -1,11 +1,6 @@
 public class Druid extends Character {
 
-    Druid (String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility) {
-        super(name, role, health, closeAttack, rangeAttack, speed, move, specialAbility);
-    }
-
-    @Override
-    public void shout() {
-        System.out.println("jsem druid");
+    Druid (String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility, int cooldownSpecialAbility) {
+        super(name, role, health, closeAttack, rangeAttack, speed, move, specialAbility, cooldownSpecialAbility);
     }
 }
