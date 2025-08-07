@@ -11,7 +11,7 @@ public class Character {
     private int cooldownSpecialAbility;
 
     // konstruktor
-    public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility) {
+    public Character(String name, String role, int health, int closeAttack, int rangeAttack, int speed, int move, String specialAbility, int cooldownSpecialAbility) {
         this.name = name;
         this.role = role;
         this.health = health;
@@ -20,12 +20,7 @@ public class Character {
         this.speed = speed;
         this.move = move;
         this.specialAbility = specialAbility;
-        this.cooldownSpecialAbility = 0;
-
-    }
-
-    public void shout() {
-        System.out.println("jsem obecna postava");
+        this.cooldownSpecialAbility = cooldownSpecialAbility;
     }
 
     public String getName() {
@@ -60,5 +55,9 @@ public class Character {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void setCooldownSpecialAbility(int cooldownSpecialAbility) {
+        this.cooldownSpecialAbility = cooldownSpecialAbility;
     }
 }
