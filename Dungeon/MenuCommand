@@ -1,0 +1,17 @@
+public enum MenuCommand {
+    NEW("Start a new game"),
+    LOAD("Load the last saved game"),
+    ABOUT("Show me information and game rules"),
+    HELP("Show all possible commands"),
+    EXIT("Exit the program");
+
+    private final String description;
+
+    MenuCommand(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
