@@ -1,0 +1,50 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // hlavní nastavení
+        Scanner scanner = new Scanner(System.in);
+        GameBrain brain = new GameBrain();
+        boolean mainMenuSwitch = true;
+
+        // úvodní informace
+        System.out.println("\n*** Welcome to Text Adventure RPG ***\n");
+        brain.possibleMenuCommands();
+
+        // HLAVNI MENU
+        while (mainMenuSwitch) {
+
+            // dotaz na volbu v menu
+            System.out.println("\nChoose your action: ");
+            String menuChoice = scanner.nextLine().toUpperCase().trim();
+
+            // přepínač na orientaci v menu
+            try {
+                MenuCommand menuAction = MenuCommand.valueOf(menuChoice);
+
+                switch (menuAction) {
+                    case NEW -> {
+                        System.out.println("NEW");      // Todo
+                    }
+                    case LOAD -> {
+                        System.out.println("LOAD");     // Todo
+                    }
+                    case ABOUT -> {
+                        System.out.println("ABOUT");    // Todo
+                    }
+                    case HELP -> {
+                        brain.possibleMenuCommands();
+                    }
+                    case EXIT -> {
+                        System.out.println("Goodbye!");
+                        mainMenuSwitch = false;
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Enter again your command.");
+            }
+        }
+    }
+}
