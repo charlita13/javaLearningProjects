@@ -1,0 +1,10 @@
+public class GameBrain {
+
+    // MenuCommands
+    public void possibleMenuCommands() {
+        System.out.println("Possible commands: ");
+        for (MenuCommand c : MenuCommand.values()) {
+            System.out.println("  -> " + c + " (" + c.getDescription() + ")");
+        }
+    }
+}
