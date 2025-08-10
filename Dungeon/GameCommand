@@ -1,0 +1,18 @@
+public class GameCommand {
+}
+
+/*
+N S E W - pohyb
+SPY - prozkoumat nepritele
+STEAL - okrast nepritele
+MAP - ukazat mapu
+RUN - zkusit utect z boje
+INVENTORY - ukazat batoh (potion na HP a mec a zbroj - res opotrebeni)
+USE <name> - pouzij neco z batohu
+STATS - staty hrace
+HELP - vypsat mozne pokyny
+GOAL - spleneni cile (mode na survival nebo loot XY goldu)
+SAVE - ulozit hru
+LEAVE - navrat do menu (save Y or N)
+EXIT - ukoncit hru a program
+ */
