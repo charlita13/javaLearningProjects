@@ -26,19 +26,30 @@ public class Main {
 
                 switch (menuAction) {
                     case NEW -> {
-                        System.out.println("NEW");      // Todo
+                        Character character = new Character();
+                        GameField gameField = new GameField();
+                        System.out.println("Welcome to the dungeon. Here is a list of possible commands.");
+                        brain.possibleGameCommands();
+                        System.out.println("Survive as long as possible !");
+
+                        boolean gameSwitch = true;
+                        while (gameSwitch) {
+
+                            // Todo
+                        }
                     }
                     case LOAD -> {
                         System.out.println("LOAD");     // Todo
                     }
                     case ABOUT -> {
-                        System.out.println("ABOUT");    // Todo
+                        brain.describeGame();
                     }
                     case HELP -> {
                         brain.possibleMenuCommands();
                     }
                     case EXIT -> {
                         System.out.println("Goodbye!");
+                        scanner.close();
                         mainMenuSwitch = false;
                     }
                 }
