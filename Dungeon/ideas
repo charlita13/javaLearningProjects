@@ -1,0 +1,24 @@
+public class Ideas {
+
+    /*
+    ToDO - MAIN
+    - new
+    - laod
+
+    ToDo - character
+    - upgraduje staty equipem
+    - batoh s XY sloty na mece zbroj a potiony
+    - do budoucna volitelne staty
+
+    ToDo - gameField
+    - herni mod
+        System.out.println("Survival mode - get as far as possible.");
+        System.out.println("Task mode - finish your task.");
+
+    ToDo - gamecommands
+    // SPY("Inspect your enemy"),
+    // STEAL("Try to steal from your enemy"),
+    // RUN("Try to avoid the combat, RUN!"),
+    // GOAL("Show victory condition"),
+     */
+}
