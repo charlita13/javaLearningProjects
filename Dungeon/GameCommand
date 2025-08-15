@@ -1,18 +1,30 @@
-public class GameCommand {
-}
+public enum GameCommand {
+    N("Move to the north"),
+    S("Move to the south"),
+    E("Move to the east"),
+    W("Move to the west"),
+    MAP("Show map"),
+    STATS("Show your stats"),
+    BAG("Show your bag - potion and equipment"),
+    POTION("Use potion from your bag to restore hp"),
+    ARMOR("Use armor from your bag to upgrade defense"),
+    WEAPON("Show your bag - potion and equipment"),
+    HELP("Show all possible commands"),
+    LEAVE("Back to main menu?"),
+    EXIT("Exit current game and the program");
 
-/*
-N S E W - pohyb
-SPY - prozkoumat nepritele
-STEAL - okrast nepritele
-MAP - ukazat mapu
-RUN - zkusit utect z boje
-INVENTORY - ukazat batoh (potion na HP a mec a zbroj - res opotrebeni)
-USE <name> - pouzij neco z batohu
-STATS - staty hrace
-HELP - vypsat mozne pokyny
-GOAL - spleneni cile (mode na survival nebo loot XY goldu)
-SAVE - ulozit hru
-LEAVE - navrat do menu (save Y or N)
-EXIT - ukoncit hru a program
- */
+    // SPY("Inspect your enemy"),
+    // STEAL("Try to steal from your enemy"),
+    // RUN("Try to avoid the combat, RUN!"),
+    // GOAL("Show victory condition"),
+
+    private final String description;
+
+    GameCommand(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
