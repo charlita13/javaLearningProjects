@@ -7,4 +7,17 @@ public class GameBrain {
             System.out.println("  -> " + c + " (" + c.getDescription() + ")");
         }
     }
+
+    public void possibleGameCommands() {
+        System.out.println("Possible game commands: ");
+        for (GameCommand gc : GameCommand.values()) {
+            System.out.println("  -> " + gc + " (" + gc.getDescription() + ")");
+        }
+    }
+
+    public void describeGame() {
+        System.out.println("Go through the dungeon and try to finish your task.");
+        System.out.println("Survival mode - get as far as possible.");
+        System.out.println("Task mode - finish your task.");
+    }
 }
