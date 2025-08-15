@@ -1,8 +1,63 @@
 public class Character {
-}
 
+    private int hp;
+    private int defense;
+    private int attack;
+    private int speed;
+    private int potionNumber;
 
-/*
-bdue mit HP s moznosti doplnit potiony, bude mit atack a defense - upgraduje equipúem
+    public Character() {
+        this.speed = 3;
+        this.hp = 10;
+        this.attack = 10;
+        this.defense = 10;
+        this.potionNumber = 1;
+    }
+
+    /*
+upgraduje equipem
 batoh s XY sloty na mece zbroj a potiony
+
+do budoucna volitelne staty
  */
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getPotionNumber() {
+        return potionNumber;
+    }
+
+    public void setPotionNumber(int potionNumber) {
+        this.potionNumber = potionNumber;
+    }
+}
