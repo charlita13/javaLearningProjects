@@ -2,12 +2,13 @@ import java.io.Serializable;
 
 public class GameField implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final int row = 5;
     private final int column = 5;
-    private char[][] field;
+    private String[][] field;
 
     public GameField() {
-        field = new char[row][column];
+        field = new String[row][column];
         initializeField();
     }
 
@@ -15,7 +16,7 @@ public class GameField implements Serializable {
     public void initializeField() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                field[i][j] = '.';
+                field[i][j] = "■";
             }
         }
     }
@@ -30,7 +31,16 @@ public class GameField implements Serializable {
         }
     }
 
-    public char[][] getField() {
+    // aktualizuj herní pole
+    public void updateField(int rowIndex, int columnIndex, String symbol) {
+        if (rowIndex >= 0 && rowIndex < row && columnIndex >= 0 && columnIndex < column) {
+            field[rowIndex][columnIndex] = symbol;
+        } else {
+            System.out.println("Invalid coordinates! Out of bounds.");
+        }
+    }
+
+    public String[][] getField() {
         return field;
     }
 }
