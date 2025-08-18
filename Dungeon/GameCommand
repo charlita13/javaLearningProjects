@@ -8,15 +8,10 @@ public enum GameCommand {
     BAG("Show your bag - potion and equipment"),
     POTION("Use potion from your bag to restore hp"),
     ARMOR("Use armor from your bag to upgrade defense"),
-    WEAPON("Show your bag - potion and equipment"),
+    WEAPON("Use weapon from your bag to upgrade attack"),
     HELP("Show all possible commands"),
     LEAVE("Back to main menu?"),
     EXIT("Exit current game and the program");
-
-    // SPY("Inspect your enemy"),
-    // STEAL("Try to steal from your enemy"),
-    // RUN("Try to avoid the combat, RUN!"),
-    // GOAL("Show victory condition"),
 
     private final String description;
 
