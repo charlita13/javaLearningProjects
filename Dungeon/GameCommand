@@ -9,6 +9,7 @@ public enum GameCommand {
     POTION("Use potion from your bag to restore hp"),
     ARMOR("Use armor from your bag to upgrade defense"),
     WEAPON("Use weapon from your bag to upgrade attack"),
+    SAVE("Save current game"),
     HELP("Show all possible commands"),
     LEAVE("Back to main menu?"),
     EXIT("Exit current game and the program");
