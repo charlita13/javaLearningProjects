@@ -16,7 +16,7 @@ public class GameField implements Serializable {
     public void initializeField() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                field[i][j] = "■";
+                field[i][j] = "?";
             }
         }
     }
@@ -33,10 +33,42 @@ public class GameField implements Serializable {
 
     // aktualizuj herní pole
     public void updateField(int rowIndex, int columnIndex, String symbol) {
-        if (rowIndex >= 0 && rowIndex < row && columnIndex >= 0 && columnIndex < column) {
-            field[rowIndex][columnIndex] = symbol;
+        field[rowIndex][columnIndex] = symbol;
+    }
+
+    // pozice X (hráče)
+    public int[] whereIsPlayer() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if ("▣".equals(field[i][j])) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
+
+    // NSEW
+    public void NSEW(String direction) {
+        int[] playerposition = whereIsPlayer();
+        int rowIndex = playerposition[0];
+        int columnIndex = playerposition[1];
+
+        if ("w".equals(direction.toLowerCase())) {
+            columnIndex--;
+        } else if ("e".equals(direction.toLowerCase())) {
+            columnIndex++;
+        } else if ("s".equals(direction.toLowerCase())) {
+            rowIndex++;
         } else {
-            System.out.println("Invalid coordinates! Out of bounds.");
+            rowIndex--;
+        }
+
+        if (rowIndex >= 0 && rowIndex < row && columnIndex >= 0 && columnIndex < column) {
+            updateField(playerposition[0], playerposition[1], "■");
+            updateField(rowIndex, columnIndex, "▣");
+        } else {
+            System.out.println("Invalid coordinates! Out of bounds. Player did not move.");
         }
     }
 
