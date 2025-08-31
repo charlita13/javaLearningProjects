@@ -31,12 +31,13 @@ public class Main {
                         System.out.println("Welcome to the dungeon. Here is a list of possible commands.");
                         brain.possibleGameCommands();
                         System.out.println("Survive as long as possible !");
-                        System.out.println("Your postion on the map = X");
+                        System.out.println("Your postion on the map = ▣");
 
                         boolean gameSwitch = true;
+                        gameField.updateField(0,0,"▣");
+
                         while (gameSwitch) {
 
-                            gameField.updateField(0,0,"X");
                             gameField.printField();
 
                             // dotaz na volbu ve hře
@@ -48,19 +49,25 @@ public class Main {
                                 GameCommand gameAction = GameCommand.valueOf(gameChoice);
 
                                 switch (gameAction) {
-                                    case N -> {System.out.println("N");}     // Todo
-                                    case S -> {System.out.println("S");}     // Todo
-                                    case E -> {System.out.println("E");}     // Todo
-                                    case W -> {System.out.println("W");}     // Todo
+                                    case N, S, E, W -> {
+                                        gameField.NSEW(gameChoice);
+                                    }
                                     case MAP -> {System.out.println("MAP");}     // Todo
                                     case STATS -> {System.out.println("STATS");}     // Todo
                                     case BAG -> {System.out.println("BAG");}     // Todo
                                     case POTION -> {System.out.println("POTION");}     // Todo
                                     case ARMOR -> {System.out.println("ARMOR");}     // Todo
                                     case WEAPON -> {System.out.println("WEAPON");}     // Todo
-                                    case HELP -> {System.out.println("HELP");}     // Todo
+                                    case SAVE -> {System.out.println("SAVE");}     // Todo
+                                    case HELP -> {
+                                        brain.possibleGameCommands();
+                                    }
                                     case LEAVE -> {System.out.println("LEAVE");}     // Todo
-                                    case EXIT -> {System.out.println("EXIT");}     // Todo
+                                    case EXIT -> {     // Todo
+                                        System.out.println("Game closed without saving. Bye");
+                                        gameSwitch = false;
+                                        mainMenuSwitch = false;
+                                        }
                                     }
                             } catch (IllegalArgumentException e) {
                                 System.out.println("Invalid input. Enter again your command.");
@@ -78,7 +85,6 @@ public class Main {
                     }
                     case EXIT -> {
                         System.out.println("Goodbye!");
-                        scanner.close();
                         mainMenuSwitch = false;
                     }
                 }
@@ -86,5 +92,6 @@ public class Main {
                 System.out.println("Invalid input. Enter again your command.");
             }
         }
+        scanner.close();
     }
 }
