@@ -53,4 +53,13 @@ public class Character {
     public void setPotionNumber(int potionNumber) {
         this.potionNumber = potionNumber;
     }
+
+    public void showCharStats() {
+        System.out.println("Speed: " + this.getSpeed());
+        System.out.println("Health: " + this.getHp());
+        System.out.println("Attack: " + this.getAttack());
+        System.out.println("Defense: " + this.getDefense());
+        System.out.println("Number of potions: " + this.getPotionNumber());
+        System.out.println();
+    }
 }
