@@ -35,10 +35,9 @@ public class Main {
 
                         boolean gameSwitch = true;
                         gameField.updateField(0,0,"▣");
+                        gameField.printField();
 
                         while (gameSwitch) {
-
-                            gameField.printField();
 
                             // dotaz na volbu ve hře
                             System.out.println("\nChoose your action: ");
@@ -51,9 +50,15 @@ public class Main {
                                 switch (gameAction) {
                                     case N, S, E, W -> {
                                         gameField.NSEW(gameChoice);
+                                        gameField.printField();
                                     }
-                                    case MAP -> {System.out.println("MAP");}     // Todo
-                                    case STATS -> {System.out.println("STATS");}     // Todo
+                                    case MAP -> {
+                                        System.out.println("MAP");
+                                    }
+                                    case STATS -> {
+                                        System.out.println("Current stats of the player:");
+                                        character.showCharStats();
+                                    }
                                     case BAG -> {System.out.println("BAG");}     // Todo
                                     case POTION -> {System.out.println("POTION");}     // Todo
                                     case ARMOR -> {System.out.println("ARMOR");}     // Todo
