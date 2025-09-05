@@ -1,0 +1,50 @@
+public class Item {
+
+    private int durability;
+    private int defense;
+    private int attack;
+    private int healthRecovery;
+    private int speed;
+    private int hp;
+
+    public Item(int durability, int defense, int attack, int healthRecovery, int speed, int hp) {
+        this.durability = durability;
+        this.defense = defense;
+        this.attack = attack;
+        this.healthRecovery = healthRecovery;
+        this.speed = speed;
+        this.hp = hp;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
+
+    public void setHealthRecovery(int healthRecovery) {
+        this.healthRecovery = healthRecovery;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getDurability() {
+        return durability;
+    }
+
+    public int getHealthRecovery() {
+        return healthRecovery;
+    }
+}
