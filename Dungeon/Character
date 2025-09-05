@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Character {
 
     private int hp;
@@ -5,10 +7,11 @@ public class Character {
     private int attack;
     private int speed;
     private int potionNumber;
+    private List<String> bag;
 
     public Character() {
         this.speed = 3;
-        this.hp = 10;
+        this.hp = 30;
         this.attack = 10;
         this.defense = 10;
         this.potionNumber = 1;
