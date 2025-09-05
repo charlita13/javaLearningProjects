@@ -1,6 +1,17 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class GameBrain {
+
+    // objekty k nalezení
+    Item potion = new Item(1, 0, 0, 10, 0, 0);
+    Item weakShield = new Item(5, 5, 0, 0, 0, 0);
+    Item strongShield = new Item(7, 10, 0, 0, 0, 0);
+    Item weakSword = new Item(5, 0, 7, 0, 0, 0);
+    Item strongSword = new Item(8, 0, 14, 0, 0, 0);
+    Item boss = new Item(0, 20, 10, 0, 1, 100);
+    Item weakEnemy = new Item(0, 5, 10, 0, 2, 30);
+    Item strongEnemy = new Item(0, 10, 10, 0, 4, 50);
 
     // MenuCommands
     public void possibleMenuCommands() {
@@ -28,5 +39,51 @@ public class GameBrain {
         String response =  scanner.nextLine();
         boolean resultResponse = (response.toLowerCase().equals("y")) ? true : false;
         return resultResponse;
+    }
+
+    /*
+    nic = 0 - 25
+    Item potion = 26 - 35
+    Item weakShield = 36 - 45
+    Item strongShield =  46 - 50
+    Item weakSword = 51 - 60
+    Item strongSword = 61 - 65
+    weakEnemy 65 - 79
+    strongEnemy 80 - 92
+    boss 93 - 100
+    */
+
+    public Item whatIsThere() {
+        Random rand = new Random();
+        int number = rand.nextInt(100) + 1; // 1 - 100
+        System.out.println(number);
+        if (number <= 25) {
+            System.out.println("NIC");
+            return null;
+        } else if (number <= 35) {
+            System.out.println("POTION");
+            return potion;
+        } else if (number <= 45) {
+            System.out.println("weakShield");
+            return weakShield;
+        } else if (number <= 50) {
+            System.out.println("strongShield");
+            return strongShield;
+        } else if (number <= 60) {
+            System.out.println("weakSword");
+            return weakSword;
+        } else if (number <= 65) {
+            System.out.println("strongSword");
+            return strongSword;
+        } else if (number <= 79) {
+            System.out.println("weakEnemy");
+            return weakEnemy;
+        } else if (number <= 92) {
+            System.out.println("strongEnemy");
+            return strongEnemy;
+        } else {
+            System.out.println("boss");
+            return boss;
+        }
     }
 }
