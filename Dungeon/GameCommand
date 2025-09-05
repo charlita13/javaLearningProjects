@@ -5,7 +5,6 @@ public enum GameCommand {
     W("Move to the west"),
     MAP("Show map"),
     STATS("Show your stats"),
-    BAG("Show your bag - potion and equipment"),
     POTION("Use potion from your bag to restore hp"),
     ARMOR("Use armor from your bag to upgrade defense"),
     WEAPON("Use weapon from your bag to upgrade attack"),
