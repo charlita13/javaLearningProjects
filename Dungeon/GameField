@@ -49,7 +49,7 @@ public class GameField implements Serializable {
     }
 
     // NSEW
-    public void NSEW(String direction) {
+    public boolean NSEW(String direction) {
         int[] playerposition = whereIsPlayer();
         int rowIndex = playerposition[0];
         int columnIndex = playerposition[1];
@@ -67,12 +67,40 @@ public class GameField implements Serializable {
         if (rowIndex >= 0 && rowIndex < row && columnIndex >= 0 && columnIndex < column) {
             updateField(playerposition[0], playerposition[1], "■");
             updateField(rowIndex, columnIndex, "▣");
+            return true;
         } else {
             System.out.println("Invalid coordinates! Out of bounds. Player did not move.");
+            return false;
         }
     }
 
     public String[][] getField() {
         return field;
+    }
+
+    public boolean wasIAlreadyThere(String direction) {
+        int[] playerposition = whereIsPlayer();
+        int rowIndex = playerposition[0];
+        int columnIndex = playerposition[1];
+
+        if ("w".equals(direction.toLowerCase())) {
+            columnIndex--;
+        } else if ("e".equals(direction.toLowerCase())) {
+            columnIndex++;
+        } else if ("s".equals(direction.toLowerCase())) {
+            rowIndex++;
+        } else {
+            rowIndex--;
+        }
+
+        if (rowIndex >= 0 && rowIndex < row && columnIndex >= 0 && columnIndex < column) {
+            if ("■".equals(field[rowIndex][columnIndex])) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
