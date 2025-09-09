@@ -10,6 +10,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         GameBrain brain = new GameBrain();
         boolean mainMenuSwitch = true;
+        boolean moved;
+        boolean alreadyThere;
+        Item thisFieldAction;
 
         // úvodní informace
         System.out.println("\n*** Welcome to Text Adventure RPG ***\n");
@@ -51,9 +54,17 @@ public class Main {
 
                                 switch (gameAction) {
                                     case N, S, E, W -> {
-                                        gameField.NSEW(gameChoice);
-                                        gameField.printField();
-                                        brain.whatIsThere();
+                                        alreadyThere = gameField.wasIAlreadyThere(gameChoice);
+                                        moved = gameField.NSEW(gameChoice);
+                                        if (moved) {
+                                            if (alreadyThere) {
+                                                System.out.println("You have already been here.");
+                                            } else {
+                                                thisFieldAction = brain.whatIsThere();
+                                                System.out.println(thisFieldAction);    // ToDo udělat akce, podle toho co objevím na políčku
+                                            }
+                                        }
+                                         gameField.printField();
                                     }
                                     case MAP -> {
                                         System.out.println("MAP");
