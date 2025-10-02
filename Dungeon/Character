@@ -7,14 +7,22 @@ public class Character {
     private int attack;
     private int speed;
     private int potionNumber;
+    private int weakShield;
+    private int strongShield;
+    private int weakSword;
+    private int strongSword;
     private List<String> bag;
 
     public Character() {
         this.speed = 3;
-        this.hp = 30;
+        this.hp = 50;
         this.attack = 10;
         this.defense = 10;
         this.potionNumber = 1;
+        this.weakShield = 0;
+        this.strongShield = 0;
+        this.weakSword = 0;
+        this.strongSword = 0;
     }
 
     public int getSpeed() {
@@ -57,12 +65,48 @@ public class Character {
         this.potionNumber = potionNumber;
     }
 
+    public int getWeakShield() {
+        return weakShield;
+    }
+
+    public void setWeakShield(int weakShield) {
+        this.weakShield = weakShield;
+    }
+
+    public void setStrongShield(int strongShield) {
+        this.strongShield = strongShield;
+    }
+
+    public int getStrongShield() {
+        return strongShield;
+    }
+
+    public int getWeakSword() {
+        return weakSword;
+    }
+
+    public void setWeakSword(int weakSword) {
+        this.weakSword = weakSword;
+    }
+
+    public void setStrongSword(int strongSword) {
+        this.strongSword = strongSword;
+    }
+
+    public int getStrongSword() {
+        return strongSword;
+    }
+
     public void showCharStats() {
         System.out.println("Speed: " + this.getSpeed());
         System.out.println("Health: " + this.getHp());
         System.out.println("Attack: " + this.getAttack());
         System.out.println("Defense: " + this.getDefense());
         System.out.println("Number of potions: " + this.getPotionNumber());
+        System.out.println("Number of weak shields: " + this.getWeakShield());
+        System.out.println("Number of strong shields: " + this.getStrongShield());
+        System.out.println("Number of weak swords: " + this.getWeakSword());
+        System.out.println("Number of strong swords: " + this.getStrongSword());
         System.out.println();
     }
 }
