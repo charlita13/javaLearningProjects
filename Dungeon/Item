@@ -1,5 +1,6 @@
 public class Item {
 
+    private String name;
     private int durability;
     private int defense;
     private int attack;
@@ -7,7 +8,8 @@ public class Item {
     private int speed;
     private int hp;
 
-    public Item(int durability, int defense, int attack, int healthRecovery, int speed, int hp) {
+    public Item(String name, int durability, int defense, int attack, int healthRecovery, int speed, int hp) {
+        this.name = name;
         this.durability = durability;
         this.defense = defense;
         this.attack = attack;
@@ -32,6 +34,18 @@ public class Item {
         this.healthRecovery = healthRecovery;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public int getAttack() {
         return attack;
     }
@@ -46,5 +60,17 @@ public class Item {
 
     public int getHealthRecovery() {
         return healthRecovery;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public String getName() {
+        return name;
     }
 }
