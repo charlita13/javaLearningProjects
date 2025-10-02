@@ -4,14 +4,15 @@ import java.util.Random;
 public class GameBrain {
 
     // objekty k nalezení
-    Item potion = new Item(1, 0, 0, 10, 0, 0);
-    Item weakShield = new Item(5, 5, 0, 0, 0, 0);
-    Item strongShield = new Item(7, 10, 0, 0, 0, 0);
-    Item weakSword = new Item(5, 0, 7, 0, 0, 0);
-    Item strongSword = new Item(8, 0, 14, 0, 0, 0);
-    Item boss = new Item(0, 20, 10, 0, 1, 100);
-    Item weakEnemy = new Item(0, 5, 10, 0, 2, 30);
-    Item strongEnemy = new Item(0, 10, 10, 0, 4, 50);
+    Item nothing = new Item("nothing", 0, 0, 0, 0, 0, 0);
+    Item potion = new Item("potion", 1, 0, 0, 10, 0, 0);
+    Item weakShield = new Item("weakShield", 5, 5, 0, 0, 0, 0);
+    Item strongShield = new Item("strongShield", 7, 10, 0, 0, 0, 0);
+    Item weakSword = new Item("weakSword",5, 0, 7, 0, 0, 0);
+    Item strongSword = new Item("strongSword", 8, 0, 14, 0, 0, 0);
+    Item boss = new Item("boss", 0, 20, 10, 0, 1, 100);
+    Item weakEnemy = new Item("weakEnemy", 0, 5, 10, 0, 2, 30);
+    Item strongEnemy = new Item("strongEnemy", 0, 10, 10, 0, 4, 50);
 
     // MenuCommands
     public void possibleMenuCommands() {
@@ -41,29 +42,17 @@ public class GameBrain {
         return resultResponse;
     }
 
-    /*
-    nic = 0 - 25
-    Item potion = 26 - 35
-    Item weakShield = 36 - 45
-    Item strongShield =  46 - 50
-    Item weakSword = 51 - 60
-    Item strongSword = 61 - 65
-    weakEnemy 65 - 79
-    strongEnemy 80 - 92
-    boss 93 - 100
-    */
-
     public Item whatIsThere() {
         Random rand = new Random();
         int number = rand.nextInt(100) + 1; // 1 - 100
         if (number <= 25) {
             System.out.println("Nothing there.");
-            return null;
+            return nothing;
         } else if (number <= 35) {
-            System.out.println("You found a health potion.");
+            System.out.println("You found a health potion. The potion added in your bag");
             return potion;
         } else if (number <= 45) {
-            System.out.println("You found health a shield.");
+            System.out.println("You found a shield.");
             return weakShield;
         } else if (number <= 50) {
             System.out.println("You found an epic shield.");
