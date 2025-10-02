@@ -64,7 +64,16 @@ public class Main {
                                                 if (thisFieldAction.getName().equals("potion")) {
                                                     character.setPotionNumber(character.getPotionNumber() + 1);
                                                     System.out.println("You have " + character.getPotionNumber() + "potions.");
-                                                }   // ToDo - akce dle toho co objeví - weakShield, strongShield, weakSword, strongSword, weakEnemy, strongEnemy, boss
+                                                } else if (thisFieldAction.getName().equals("weakShield")) {
+                                                    character.setWeakShield(character.getWeakShield() + 1);
+                                                } else if (thisFieldAction.getName().equals("strongShield")) {
+                                                    character.setStrongShield(character.getStrongShield() + 1);
+                                                } else if (thisFieldAction.getName().equals("weakSword")) {
+                                                    character.setWeakSword(character.getWeakSword() + 1);
+                                                } else if (thisFieldAction.getName().equals("strongSword")) {
+                                                    character.setStrongSword(character.getStrongSword() + 1);
+                                                }
+                                                // ToDo - akce dle toho co objeví - weakEnemy, strongEnemy, boss
                                             }
                                         }
                                          gameField.printField();
@@ -101,7 +110,7 @@ public class Main {
                                     case HELP -> {
                                         brain.possibleGameCommands();
                                     }
-                                    case LEAVE -> {System.out.println("LEAVE");}     // Todo
+                                    case LEAVE -> {System.out.println("LEAVE");}     // Todo - save y or n
                                     case EXIT -> {     // Todo
                                         System.out.println("Game closed without saving. Bye");
                                         gameSwitch = false;
