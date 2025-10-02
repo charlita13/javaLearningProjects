@@ -7,22 +7,18 @@ public class Character {
     private int attack;
     private int speed;
     private int potionNumber;
-    private int weakShield;
-    private int strongShield;
-    private int weakSword;
-    private int strongSword;
+    private int shield;
+    private int sword;
     private List<String> bag;
 
     public Character() {
         this.speed = 3;
         this.hp = 50;
-        this.attack = 10;
+        this.attack = 20;
         this.defense = 10;
         this.potionNumber = 1;
-        this.weakShield = 0;
-        this.strongShield = 0;
-        this.weakSword = 0;
-        this.strongSword = 0;
+        this.shield = 0;
+        this.sword = 0;
     }
 
     public int getSpeed() {
@@ -65,36 +61,21 @@ public class Character {
         this.potionNumber = potionNumber;
     }
 
-    public int getWeakShield() {
-        return weakShield;
+
+    public void setShield(int shield) {
+        this.shield = shield;
     }
 
-    public void setWeakShield(int weakShield) {
-        this.weakShield = weakShield;
+    public int getShield() {
+        return shield;
     }
 
-    public void setStrongShield(int strongShield) {
-        this.strongShield = strongShield;
+    public void setSword(int sword) {
+        this.sword = sword;
     }
 
-    public int getStrongShield() {
-        return strongShield;
-    }
-
-    public int getWeakSword() {
-        return weakSword;
-    }
-
-    public void setWeakSword(int weakSword) {
-        this.weakSword = weakSword;
-    }
-
-    public void setStrongSword(int strongSword) {
-        this.strongSword = strongSword;
-    }
-
-    public int getStrongSword() {
-        return strongSword;
+    public int getSword() {
+        return sword;
     }
 
     public void showCharStats() {
@@ -103,10 +84,8 @@ public class Character {
         System.out.println("Attack: " + this.getAttack());
         System.out.println("Defense: " + this.getDefense());
         System.out.println("Number of potions: " + this.getPotionNumber());
-        System.out.println("Number of weak shields: " + this.getWeakShield());
-        System.out.println("Number of strong shields: " + this.getStrongShield());
-        System.out.println("Number of weak swords: " + this.getWeakSword());
-        System.out.println("Number of strong swords: " + this.getStrongSword());
+        System.out.println("Number of shields: " + this.getShield());
+        System.out.println("Number of swords: " + this.getSword());
         System.out.println();
     }
 }
