@@ -4,10 +4,10 @@ public enum GameCommand {
     E("Move to the east"),
     W("Move to the west"),
     MAP("Show map"),
-    STATS("Show your stats"),
+    STATS("Show your stats and equipment"),
     POTION("Use potion from your bag to restore hp"),
-    ARMOR("Use armor from your bag to upgrade defense"),
-    WEAPON("Use weapon from your bag to upgrade attack"),
+    SHIELD("Use armor from your bag to upgrade defense"),
+    SWORD("Use weapon from your bag to upgrade attack"),
     SAVE("Save current game"),
     HELP("Show all possible commands"),
     LEAVE("Back to main menu?"),
@@ -22,4 +22,4 @@ public enum GameCommand {
     public String getDescription() {
         return description;
     }
-}
+};
