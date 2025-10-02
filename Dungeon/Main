@@ -61,7 +61,10 @@ public class Main {
                                                 System.out.println("You have already been here.");
                                             } else {
                                                 thisFieldAction = brain.whatIsThere();
-                                                System.out.println(thisFieldAction);    // ToDo udělat akce, podle toho co objevím na políčku
+                                                if (thisFieldAction.getName().equals("potion")) {
+                                                    character.setPotionNumber(character.getPotionNumber() + 1);
+                                                    System.out.println("You have " + character.getPotionNumber() + "potions.");
+                                                }   // ToDo - akce dle toho co objeví - weakShield, strongShield, weakSword, strongSword, weakEnemy, strongEnemy, boss
                                             }
                                         }
                                          gameField.printField();
@@ -73,7 +76,25 @@ public class Main {
                                         System.out.println("Current stats of the player:");
                                         character.showCharStats();
                                     }
-                                    case POTION -> {System.out.println("POTION");}     // Todo
+                                    case POTION -> {
+                                        if (character.getPotionNumber() > 0) {
+                                            if (character.getHp() <= 50) {
+                                                character.setHp(character.getHp() + 15);
+                                                character.setPotionNumber(character.getPotionNumber() - 1);
+                                                if (character.getHp() > 50) {
+                                                    character.setHp(50);
+                                                }
+                                                System.out.println("You used a potion. Your hp is now " + character.getHp() + ". You have " + character.getPotionNumber() + " potions left.");
+                                            }
+                                            else {
+                                                System.out.println("You have full health. You can't use a potion now.");
+                                            }
+
+
+                                        } else {
+                                            System.out.println("You don't have any potions.");
+                                        }
+                                    }
                                     case ARMOR -> {System.out.println("ARMOR");}     // Todo
                                     case WEAPON -> {System.out.println("WEAPON");}     // Todo
                                     case SAVE -> {System.out.println("SAVE");}     // Todo
