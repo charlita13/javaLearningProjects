@@ -103,4 +103,15 @@ public class GameField implements Serializable {
             return false;
         }
     }
+
+    public boolean isThereUndiscoveredField() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if ("?".equals(field[i][j])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
