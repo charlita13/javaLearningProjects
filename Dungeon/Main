@@ -13,6 +13,7 @@ public class Main {
         boolean moved;
         boolean alreadyThere;
         Item thisFieldAction;
+        boolean thereIsUndiscoveredField;
 
         // úvodní informace
         System.out.println("\n*** Welcome to Text Adventure RPG ***\n");
@@ -63,15 +64,11 @@ public class Main {
                                                 thisFieldAction = brain.whatIsThere();
                                                 if (thisFieldAction.getName().equals("potion")) {
                                                     character.setPotionNumber(character.getPotionNumber() + 1);
-                                                    System.out.println("You have " + character.getPotionNumber() + "potions.");
-                                                } else if (thisFieldAction.getName().equals("weakShield")) {
-                                                    character.setWeakShield(character.getWeakShield() + 1);
-                                                } else if (thisFieldAction.getName().equals("strongShield")) {
-                                                    character.setStrongShield(character.getStrongShield() + 1);
-                                                } else if (thisFieldAction.getName().equals("weakSword")) {
-                                                    character.setWeakSword(character.getWeakSword() + 1);
-                                                } else if (thisFieldAction.getName().equals("strongSword")) {
-                                                    character.setStrongSword(character.getStrongSword() + 1);
+                                                    System.out.println("You have " + character.getPotionNumber() + " potions.");
+                                                } else if (thisFieldAction.getName().equals("shield")) {
+                                                    character.setShield(character.getShield() + 1);
+                                                } else if (thisFieldAction.getName().equals("sword")) {
+                                                    character.setSword(character.getSword() + 1);
                                                 }
                                                 // ToDo - akce dle toho co objeví - weakEnemy, strongEnemy, boss
                                             }
@@ -104,14 +101,24 @@ public class Main {
                                             System.out.println("You don't have any potions.");
                                         }
                                     }
-                                    case ARMOR -> {System.out.println("ARMOR");}     // Todo
-                                    case WEAPON -> {System.out.println("WEAPON");}     // Todo
+                                    case SHIELD -> {
+                                        if (character.getShield() <= 0) {
+                                            System.out.println("You don't have any shields.");
+                                            break;
+                                        } else {
+                                            int shiledDefValue = brain.shieldDefense();
+                                            character.setDefense(character.getDefense() + shiledDefValue);
+                                            character.setShield(character.getShield() - 1);
+                                            System.out.println("The shield was used. Your defense is now " + character.getDefense() + ". You have " + character.getShield() + " shields left.");
+                                        }
+                                    }     // Todo - nastav durabilitu zvyseneho armoru a presun logiku do gamebrain
+                                    case SWORD -> {System.out.println("WEAPON");}     // Todo
                                     case SAVE -> {System.out.println("SAVE");}     // Todo
                                     case HELP -> {
                                         brain.possibleGameCommands();
                                     }
                                     case LEAVE -> {System.out.println("LEAVE");}     // Todo - save y or n
-                                    case EXIT -> {     // Todo
+                                    case EXIT -> {     // Todo - save y or n
                                         System.out.println("Game closed without saving. Bye");
                                         gameSwitch = false;
                                         mainMenuSwitch = false;
@@ -119,6 +126,13 @@ public class Main {
                                     }
                             } catch (IllegalArgumentException e) {
                                 System.out.println("Invalid input. Enter again your command.");
+                            }
+
+
+                            thereIsUndiscoveredField = gameField.isThereUndiscoveredField();
+                            if (thereIsUndiscoveredField == false) {
+                                System.out.println("You have discovered the whole map. Congratulations !");
+                                gameSwitch = false;
                             }
                         }
                     }
