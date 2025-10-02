@@ -6,10 +6,8 @@ public class GameBrain {
     // objekty k nalezení
     Item nothing = new Item("nothing", 0, 0, 0, 0, 0, 0);
     Item potion = new Item("potion", 1, 0, 0, 10, 0, 0);
-    Item weakShield = new Item("weakShield", 5, 5, 0, 0, 0, 0);
-    Item strongShield = new Item("strongShield", 7, 10, 0, 0, 0, 0);
-    Item weakSword = new Item("weakSword",5, 0, 7, 0, 0, 0);
-    Item strongSword = new Item("strongSword", 8, 0, 14, 0, 0, 0);
+    Item shield = new Item("shield", 5, 10, 0, 0, 0, 0);
+    Item sword = new Item("sword",5, 0, 10, 0, 0, 0);
     Item boss = new Item("boss", 0, 20, 10, 0, 1, 100);
     Item weakEnemy = new Item("weakEnemy", 0, 5, 10, 0, 2, 30);
     Item strongEnemy = new Item("strongEnemy", 0, 10, 10, 0, 4, 50);
@@ -45,25 +43,19 @@ public class GameBrain {
     public Item whatIsThere() {
         Random rand = new Random();
         int number = rand.nextInt(100) + 1; // 1 - 100
-        if (number <= 25) {
+        if (number <= 20) {
             System.out.println("Nothing there.");
             return nothing;
-        } else if (number <= 35) {
+        } else if (number <= 40) {
             System.out.println("You found a health potion. The potion added in your bag");
             return potion;
-        } else if (number <= 45) {
-            System.out.println("You found a shield.");
-            return weakShield;
         } else if (number <= 50) {
-            System.out.println("You found an epic shield.");
-            return strongShield;
+            System.out.println("You found a shield.");
+            return shield;
         } else if (number <= 60) {
-            System.out.println("You found an sword.");
-            return weakSword;
-        } else if (number <= 65) {
-            System.out.println("You found an epic sword.");
-            return strongSword;
-        } else if (number <= 79) {
+            System.out.println("You found a sword.");
+            return sword;
+        } else if (number <= 80) {
             System.out.println("You found an enemy.");
             return weakEnemy;
         } else if (number <= 92) {
@@ -73,5 +65,9 @@ public class GameBrain {
             System.out.println("You found a boss.");
             return boss;
         }
+    }
+
+    public int shieldDefense() {
+        return shield.getDefense();
     }
 }
