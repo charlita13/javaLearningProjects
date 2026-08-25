@@ -1,0 +1,36 @@
+package org.example;
+
+public class Pokoj {
+
+    private int cisloPokoje;
+    private int pocetLuzek;
+    private int cenaZaNoc;
+    private boolean jePokojVolny;
+
+    Pokoj(int cisloPokoje, int pocetLuzek, int cenaZaNoc) {
+        this.cisloPokoje = cisloPokoje;
+        this.pocetLuzek = pocetLuzek;
+        this.cenaZaNoc = cenaZaNoc;
+        this.jePokojVolny = true;
+    }
+
+    public int getPocetLuzek() {
+        return pocetLuzek;
+    }
+
+    public int getCisloPokoje() {
+        return cisloPokoje;
+    }
+
+    public int getCenaZaNoc() {
+        return cenaZaNoc;
+    }
+
+    public boolean jePokojVolny() {
+        return jePokojVolny;
+    }
+
+    public void setJePokojVolny(boolean jePokojVolny) {
+        this.jePokojVolny = jePokojVolny;
+    }
+}
