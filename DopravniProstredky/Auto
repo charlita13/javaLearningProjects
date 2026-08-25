@@ -1,0 +1,35 @@
+package org.example;
+
+public class Auto extends DopravniProstredek {
+    private int pocetDveri;
+    private String typPaliva;
+
+    Auto(String znacka, String model, int rokVyroby, int zakladniCena, int pocetDveri, String typPaliva) {
+        super(znacka, model, rokVyroby, zakladniCena);
+        this.pocetDveri = pocetDveri;
+        this.typPaliva = typPaliva;
+    }
+
+    public int getPocetDveri() {
+        return pocetDveri;
+    }
+
+    public String getTypPaliva() {
+        return typPaliva;
+    }
+
+    @Override
+    public int  vypisVyslednouCenu() {
+        return (getZakladniCena() / 100) * (100 + (5 * getPocetDveri()));
+    }
+
+    @Override
+    public void vypisVsechnyInformace() {
+        System.out.println("Auto " + getZnacka() + " " + getModel());
+        System.out.println("Rok výroby: " + getRokVyroby());
+        System.out.println("Zákl. cena: " + getZakladniCena());
+        System.out.println("Typ paliva: " + getTypPaliva());
+        System.out.println("Počet dveří: " + getPocetDveri());
+        System.out.println("Výsledná cena: " + vypisVyslednouCenu());
+    }
+}
