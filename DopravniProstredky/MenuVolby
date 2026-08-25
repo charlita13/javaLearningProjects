@@ -1,0 +1,18 @@
+package org.example;
+
+public enum MenuVolby {
+    AUTO(1, "Přidej auto"),
+    MOTORKA(2, "Přidej motorku"),
+    NAKLADAK(3, "Přidej náklaďák"),
+    VYPIS(4, "Vypiš všechna vozidla"),
+    HODNOTA(5, "Zobraz hodnotu vozidel"),
+    KONEC(6, "Ukonči program");
+
+    final int pozice;
+    final String popis;
+
+     MenuVolby(int pozice, String popis) {
+         this.popis = popis;
+         this.pozice = pozice;
+     }
+}
