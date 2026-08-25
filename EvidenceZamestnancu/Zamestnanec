@@ -1,0 +1,13 @@
+package org.example;
+
+public class Zamestnanec {
+    String jmeno;
+    String prijmeni;
+    int mzdaZakladni;
+
+    Zamestnanec(String jmeno, String prijmeni, int mzdaZakladni) {
+        this.jmeno = jmeno;
+        this.prijmeni = prijmeni;
+        this.mzdaZakladni = mzdaZakladni;
+    }
+}
