@@ -1,0 +1,71 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        boolean hlavniCyklus = true;
+        Scanner scanner = new Scanner(System.in);
+        DatabazeZamestnancu databazeZamestnancu = new DatabazeZamestnancu();
+
+        while (hlavniCyklus) {
+            System.out.println("Vyberte z následujících možností (zadejte číslo volby):");
+            System.out.println("1 - založ manažera\n2 - založ programátora\n3 - vypiš všechny zaměstnance\n4 - ukonči program");
+
+            int volba = scanner.nextInt();
+            scanner.nextLine();
+
+            // neresime neciselne vstupy
+            if (volba < 1 || volba > 4) {
+                System.out.println("Chybná volba.");
+            } else if (volba == 1) {
+                System.out.println("Přidání manažera\nJméno: ");
+                String jmeno = scanner.nextLine();
+                System.out.println("Příjmení:");
+                String prijmeni = scanner.nextLine();
+                System.out.println("Mzda:");
+                int mzda = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Počet podřízených:");
+                int podrizeni = scanner.nextInt();
+                scanner.nextLine();
+
+                databazeZamestnancu.pridejManazera(jmeno, prijmeni, mzda, podrizeni);
+            } else if (volba == 2) {
+                ArrayList<String> jazyky = new ArrayList<String>();
+
+                System.out.println("Přidání programátora\nJméno: ");
+                String jmeno = scanner.nextLine();
+                System.out.println("Příjmení:");
+                String prijmeni = scanner.nextLine();
+                System.out.println("Mzda:");
+                int mzda = scanner.nextInt();
+                scanner.nextLine();
+
+                boolean pridej = true;
+                while (pridej) {
+                    System.out.println("Jazyk:");
+                    String jazyk = scanner.nextLine();
+                    jazyky.add(jazyk);
+
+                    System.out.println("Pro přidání dalšího jazyku zadejte 1, cokoliv jiného pro ukonční.");
+                    String dalsi = scanner.nextLine();
+                    if (dalsi.equals("1")) {
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+                databazeZamestnancu.pridejProgramatora(jmeno, prijmeni, mzda, jazyky);
+            } else if (volba == 3) {
+                System.out.println("Vypsání zaměstnanců");
+                databazeZamestnancu.vypisVse();
+            } else {
+                System.out.println("Ukončení programu");
+                hlavniCyklus = false;
+            }
+        }
+    }
+}
