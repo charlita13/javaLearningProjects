@@ -1,1 +1,138 @@
+package org.example;
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileOutputStream;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+        String token = "TOKEN SEM";
+        long channelId = 1445461144033689711L;
+
+        OffsetDateTime since = OffsetDateTime.of(
+                2026, 2, 11, 19, 1, 0, 0,
+                ZoneOffset.of("+02:00")
+        );
+
+        OffsetDateTime until = OffsetDateTime.of(
+                2026, 4, 13, 18, 46, 0, 0,
+                ZoneOffset.of("+02:00")
+        );
+
+        JDA jda = JDABuilder.createDefault(token)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
+                .build();
+
+        jda.awaitReady();
+
+        System.out.println("Bot přihlášen jako: " + jda.getSelfUser().getAsTag());
+
+        TextChannel channel = jda.getTextChannelById(channelId);
+
+        if (channel == null) {
+            System.out.println("Kanál nebyl nalezen nebo k němu bot nemá přístup.");
+            jda.shutdown();
+            return;
+        }
+
+        System.out.println("Načítám zprávy od: " + since);
+        if (until != null) {
+            System.out.println("Načítám zprávy do: " + until);
+        } else {
+            System.out.println("Načítám zprávy do: přítomnosti");
+        }
+        System.out.println("Kanál: " + channel.getName());
+        System.out.println("--------------------------------------------");
+
+        List<MessageData> messagesToExport = new ArrayList<>();
+
+        for (Message message : channel.getIterableHistory()) {
+            OffsetDateTime messageTime = message.getTimeCreated();
+
+            if (until != null && messageTime.isAfter(until)) {
+                continue;
+            }
+
+            if (messageTime.isBefore(since)) {
+                break;
+            }
+
+            if (message.getAuthor().isBot()) {
+                continue;
+            }
+
+            String content = message.getContentDisplay();
+            String username = message.getAuthor().getName();
+
+            String displayName = message.getAuthor().getGlobalName();
+            if (displayName == null || displayName.isBlank()) {
+                displayName = username;
+            }
+
+            MessageData data = new MessageData(
+                    messageTime.toString(),
+                    username,
+                    displayName,
+                    content
+            );
+
+            messagesToExport.add(data);
+        }
+
+        exportToExcel(messagesToExport);
+
+        System.out.println("Načteno zpráv: " + messagesToExport.size());
+        System.out.println("Excel uložen jako: C:\\Users\\hp\\Downloads\\discord_zpravy-hokej.xlsx");
+
+        jda.shutdown();
+    }
+
+    private static void exportToExcel(List<MessageData> messages) throws Exception {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Zpravy");
+
+        int rowIndex = 0;
+
+        Row header = sheet.createRow(rowIndex++);
+        header.createCell(0).setCellValue("Cas");
+        header.createCell(1).setCellValue("Username");
+        header.createCell(2).setCellValue("Jmeno");
+        header.createCell(3).setCellValue("Zprava");
+
+        for (MessageData message : messages) {
+            Row row = sheet.createRow(rowIndex++);
+            row.createCell(0).setCellValue(message.time());
+            row.createCell(1).setCellValue(message.username());
+            row.createCell(2).setCellValue(message.displayName());
+            row.createCell(3).setCellValue(message.content());
+        }
+
+        sheet.autoSizeColumn(0);
+        sheet.autoSizeColumn(1);
+        sheet.autoSizeColumn(2);
+        sheet.autoSizeColumn(3);
+
+        try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\hp\\Downloads\\discord_zpravy-hokej.xlsx")) {
+            workbook.write(outputStream);
+        }
+
+        workbook.close();
+    }
+
+    record MessageData(String time, String username, String displayName, String content) {
+    }
+}
