@@ -1,0 +1,42 @@
+package org.example;
+
+import java.util.ArrayList;
+
+public class DatabazeZamestnancu {
+
+    ArrayList<Zamestnanec> zamestannci = new ArrayList<>();
+
+    public void pridejManazera(String jmeno, String prijmeni, int mzda, int podrizeni) {
+        Manager manager = new Manager(jmeno, prijmeni, mzda, podrizeni);
+        zamestannci.add(manager);
+        System.out.println("Manažer byl založen.");
+    }
+
+    public void pridejProgramatora(String jmeno, String prijmeni, int mzda, ArrayList<String> jazyky) {
+        Programator programator = new Programator(jmeno, prijmeni, mzda, jazyky);
+        zamestannci.add(programator);
+        System.out.println("Programátor byl založen.");
+    }
+
+    public void vypisVse() {
+        if (zamestannci.isEmpty()) {
+            System.out.println("NEJSOU");
+            return;
+        }
+        for (Zamestnanec zamestnanec : zamestannci) {
+            System.out.println("Jméno: " + zamestnanec.jmeno + "\nPříjmení" + zamestnanec.prijmeni + "\nZákl. mzda: " + zamestnanec.mzdaZakladni);
+            if (zamestnanec instanceof Manager) {
+                System.out.println("Výsledná mzda: " + (zamestnanec.mzdaZakladni + ((Manager) zamestnanec).pocetPodrizenych * 2000));
+            }
+            if (zamestnanec instanceof Programator) {
+                int jazyku = ((Programator) zamestnanec).jazyky.size();
+                double bonusKoeficient  = 1;
+                for (int i = 1; i <= jazyku; i++) {
+                    bonusKoeficient = bonusKoeficient * 1.1;
+                }
+                System.out.printf("Výsledná mzda: %.2f", bonusKoeficient * zamestnanec.mzdaZakladni);
+                System.out.println();
+            }
+        }
+    }
+}
