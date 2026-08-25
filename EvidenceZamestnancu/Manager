@@ -1,0 +1,11 @@
+package org.example;
+
+public class Manager extends Zamestnanec{
+
+    int pocetPodrizenych;
+
+    Manager(String jmeno, String prijmeni, int mzdaZakladni, int pocetPOdrizenych) {
+        super(jmeno, prijmeni, mzdaZakladni);
+        this.pocetPodrizenych = pocetPOdrizenych;
+    }
+}
