@@ -1,0 +1,26 @@
+package org.example;
+
+public class Host {
+
+    private String jmeno;
+    private String prijmeni;
+    private int id;
+
+    Host(String jmeno, String prijmeni, int id) {
+        this.jmeno = jmeno;
+        this.prijmeni = prijmeni;
+        this.id = id;
+    }
+
+    public String getJmeno() {
+        return jmeno;
+    }
+
+    public String getPrijmeni() {
+        return prijmeni;
+    }
+
+    public int getId() {
+        return id;
+    }
+}
