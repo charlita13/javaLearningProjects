@@ -1,0 +1,133 @@
+package org.example;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+public class Knihovna {
+
+    ArrayList<Kniha> seznamKnih = new ArrayList<Kniha>();
+    Field[] deklarovanaPoleKnihy =Kniha.class.getDeclaredFields();
+
+    public void nakrmeniKnihovny() {
+        Kniha kniha1 = new Kniha("Pán much", "William Golding", "1990", true);
+        seznamKnih.add(kniha1);
+        Kniha kniha2 = new Kniha("IT", "Stephen King", "1986", true);
+        seznamKnih.add(kniha2);
+        Kniha kniha3 = new Kniha("Hobit aneb Cesta tam a zase zpátky ", "J. R. R. Tolkien", "1937", true);
+        seznamKnih.add(kniha3);
+    }
+
+    static void vypisMenu() {
+        System.out.println("Vyberte z následujících možností (zadejte číslo volby)");
+        for (VolbyMenu volba : VolbyMenu.values()) {
+            System.out.println(volba.volba + " - " + volba.popis);
+        }
+    }
+
+    public boolean jeKnihovnaPrazdna() {
+        return (seznamKnih.isEmpty());
+    }
+
+    public void vypisVsechnyKnihy() {
+        int pozice = 1;
+        if (jeKnihovnaPrazdna()) {
+            System.out.println("V knihovně aktuálně nejsou žádné knihy.");
+        } else {
+            System.out.println("Knihovna obsahuje následující knihy:");
+            for (Kniha kniha : seznamKnih) {
+                System.out.println("Číslo: " + pozice);
+                System.out.println("Název: " + kniha.getNazev());
+                System.out.println("Autor: " + kniha.getAutor());
+                System.out.println("Vydání: " + kniha.getRokVydani());
+                if (kniha.getDostupnost()) {
+                    System.out.println("Dostupnost: DOSTUPNÁ\n");
+                } else {
+                    System.out.println("Dostupnost: VYPŮJČENÁ\n");
+                }
+                pozice++;
+            }
+        }
+    }
+
+    public void pridaniKnihy(String nazev, String autor, String rokVydani, boolean dostupnost) {
+        Kniha kniha = new Kniha(nazev, autor, rokVydani, dostupnost);
+        seznamKnih.add(kniha);
+        System.out.println("Do knihovny byla přidána kniha (" + seznamKnih.size() + " || " + nazev + " || " + autor + " || "  + rokVydani + ") a kniha je dostupná");
+    }
+
+    public void smazaniKnihy(int pozice) {
+        if (!poziceJeDostupna(pozice)) {
+            System.out.println("Kniha s tímto číslem neexistuje, zadejte správná číslo knihy.");
+        } else {
+            Kniha smazat = seznamKnih.get(pozice - 1);
+            System.out.println("Kniha byla odstraněna z knihovny (" + (pozice) + " || " + smazat.getNazev() + " || " + smazat.getAutor() + " || "  + smazat.getRokVydani() + ")");
+            seznamKnih.remove(pozice - 1);
+        }
+    }
+
+    public boolean poziceJeDostupna(int pozice) {
+        return (pozice > 0 && pozice <= seznamKnih.size());
+    }
+
+    public void pujceniKnihy(int pozice) {
+        if (!poziceJeDostupna(pozice)) {
+            System.out.println("Kniha s tímto číslem neexistuje, zadejte správná číslo knihy.");
+        } else {
+            Kniha pujcit = seznamKnih.get(pozice - 1);
+            if (pujcit.getDostupnost()) {
+                System.out.println("Kniha " + pujcit.getNazev() + " vám je zapůjčena. Stav knihy v systému změněn na VYPŮJČENÁ.");
+                pujcit.setDostupnost(false);
+            } else {
+                System.out.println("Kniha " + pujcit.getNazev() + "  je aktuálně zapůjčena a není k dispozici.");
+            }
+        }
+    }
+
+    public void vraceniKnihy(int pozice) {
+        if (!poziceJeDostupna(pozice)) {
+            System.out.println("Kniha s tímto číslem neexistuje, zadejte správná číslo knihy.");
+        } else {
+            Kniha vratit = seznamKnih.get(pozice - 1);
+            if (vratit.getDostupnost()) {
+                System.out.println("Kniha " + vratit.getNazev() + " je ve stavu DOSTUPNÁ. Vrácení nelze provést.");
+            } else {
+                System.out.println("Potvrzujeme vrácení knihy " + vratit.getNazev() + ". Kniha je odteď vedena jako DOSTUPNÁ.");
+                vratit.setDostupnost(true);
+            }
+        }
+    }
+
+    public void najdiKnihu(String coHledam, int dleCehoHledam) {
+        for (Kniha kniha : seznamKnih) {
+            if (dleCehoHledam == 1) {
+                if (kniha.getNazev().toLowerCase().contains(coHledam.trim().toLowerCase())) {
+                    System.out.println(kniha.getNazev() + " || " + kniha.getAutor() + " || " + kniha.getRokVydani());
+                }
+            } else if (dleCehoHledam == 2) {
+                if (kniha.getAutor().toLowerCase().contains(coHledam.trim().toLowerCase())) {
+                    System.out.println(kniha.getNazev() + " || " + kniha.getAutor() + " || " + kniha.getRokVydani());
+                }
+            } else if (dleCehoHledam == 3) {
+                if (kniha.getRokVydani().toLowerCase().contains(coHledam.trim().toLowerCase())) {
+                    System.out.println(kniha.getNazev() + " || " + kniha.getAutor() + " || " + kniha.getRokVydani());
+                }
+            }
+        if (dleCehoHledam < 1 ||dleCehoHledam >3) {
+            System.out.println("Chybné kriterium pro vyhledávání");
+            }
+        }
+    }
+
+    public int vypisParametryKnihy() {
+        int cislo = 1;
+
+        for (Field f : deklarovanaPoleKnihy) {
+            if (cislo <= 3) {
+                System.out.println(cislo + " " + f.getName());
+                cislo++;
+            }
+        }
+
+        return cislo;
+    }
+}
