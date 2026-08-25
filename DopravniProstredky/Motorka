@@ -1,0 +1,37 @@
+package org.example;
+
+public class Motorka extends DopravniProstredek {
+    private int objemMotoru;
+    private boolean maKufr;
+
+    Motorka(String znacka, String model, int rokVyroby, int zakladniCena, int objemMotoru, boolean maKufr) {
+        super(znacka, model, rokVyroby, zakladniCena);
+        this.objemMotoru = objemMotoru;
+        this.maKufr = maKufr;
+    }
+
+    public int getObjemMotoru() {
+        return objemMotoru;
+    }
+
+    public boolean getMaKufr() {
+        return maKufr;
+    }
+
+    @Override
+    public int vypisVyslednouCenu() {
+        int bonusZaMotor = (getObjemMotoru() > 600) ? (int)(getZakladniCena() * 0.05) : 0;
+        int bonusZaKufr = (getMaKufr()) ? 10000 : 0;
+        return getZakladniCena() + bonusZaKufr + bonusZaMotor;
+    }
+
+    @Override
+    public void vypisVsechnyInformace() {
+        System.out.println("Motorka " + getZnacka() + " " + getModel());
+        System.out.println("Rok výroby: " + getRokVyroby());
+        System.out.println("Zákl. cena: " + getZakladniCena());
+        System.out.println("Objem motoru: " + getObjemMotoru());
+        System.out.println("Má kufr: " + getMaKufr());
+        System.out.println("Výsledná cena: " + vypisVyslednouCenu());
+    }
+}
