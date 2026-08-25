@@ -1,0 +1,30 @@
+package org.example;
+
+public class Rezervace {
+
+    private Pokoj pokoj;
+    private Host host;
+    private int pocetNoci;
+
+    Rezervace(Pokoj pokoj, Host host, int pocetNoci) {
+        this.pokoj = pokoj;
+        this.host = host;
+        this.pocetNoci = pocetNoci;
+    }
+
+    public Host getHost() {
+        return host;
+    }
+
+    public Pokoj getPokoj() {
+        return pokoj;
+    }
+
+    public int getPocetNoci() {
+        return pocetNoci;
+    }
+
+    public int cenaRezervace() {
+        return pokoj.getCenaZaNoc() * pocetNoci;
+    }
+}
