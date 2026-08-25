@@ -1,0 +1,137 @@
+package org.example;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class InputHandler {
+
+    Scanner scanner = new Scanner(System.in);
+
+    public int volbaCislaMenu() {
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 1 && volba <= VolbyMenu.values().length) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte hodnotu vaší volby z nabídky menu: ");
+        }
+    }
+
+    public int cisloPokoje() {
+        System.out.println("Zadejte číslo pokoje: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 100 && volba <= 999) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte číslo pokoje v rozmezí 100 až 999: ");
+        }
+    }
+
+    public int pocetLuzek() {
+        System.out.println("Zadejte počet lůžek: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 1 && volba <= 6) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte počet lůžek v rozmezí 1 až 6: ");
+        }
+    }
+
+    public int cenaZaNocZaPokoj() {
+        System.out.println("Zadejte cenu pokoje za jednu noc: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 1) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte cenu za pokoj za noc (cena nesmí být méně než 1): ");
+        }
+    }
+
+    public String klasickyString() {
+        String textovaHodnota = scanner.nextLine();
+        textovaHodnota = textovaHodnota.trim();
+        while (textovaHodnota.length() < 3) {
+            System.out.println("Délka vstupu musí být minimálně 3 znaky.");
+            textovaHodnota = scanner.nextLine();
+        }
+        return textovaHodnota;
+    }
+
+    public int idHosta() {
+        System.out.println("Zadejte id hosta: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 100000 && volba <= 999999) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte šestičíselné id hosta: ");
+        }
+    }
+
+    public int pocetNoci() {
+        System.out.println("Počet nocí: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 1 && volba < 31) {     // max pobyt je 30 dní
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte počet nocí, tkeré host stráví v hotelu: ");
+        }
+    }
+
+    public int rezervaceKeZruseni() {
+        System.out.println("Vyberte rezervaci, kterou chcete zrušit: ");
+        while (true) {
+            try {
+                int volba = scanner.nextInt();
+                scanner.nextLine();
+                if (volba >= 1) {
+                    return volba;
+                }
+            }
+            catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte číslo rezervace, kterou chcete zrušit: ");
+        }
+    }
+}
