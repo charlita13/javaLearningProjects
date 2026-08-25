@@ -1,0 +1,83 @@
+package org.example;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        boolean hlavniCyklus = true;
+        InputHandler inputHandler = new InputHandler();
+        Garaz garaz = new Garaz();
+
+        while (hlavniCyklus) {
+
+            Garaz.vypisMenu();
+
+            int volba = inputHandler.validniIntVstup();
+
+            switch (volba) {
+                case 1 -> {
+                    System.out.println("Přidání auta");
+
+                    System.out.println("Zadejte značku auta: ");
+                    String znacka = inputHandler.validniStringTriZnakyPlus();
+                    System.out.println("Zadejte model auta: ");
+                    String model = inputHandler.validniStringTriZnakyPlus();
+
+                    int rok = inputHandler.validniRok();
+                    int cenaZakladni = inputHandler.cenaStoPlus();
+                    int dvere = inputHandler.pocetDveri();
+                    String palivo = inputHandler.druhPaliva();
+
+                    garaz.pridejAuto(znacka, model, rok, cenaZakladni, palivo, dvere);
+
+                }
+                case 2 -> {
+                    System.out.println("Přidání motorky");
+
+                    System.out.println("Zadejte značku motorky: ");
+                    String znacka = inputHandler.validniStringTriZnakyPlus();
+                    System.out.println("Zadejte model motorky: ");
+                    String model = inputHandler.validniStringTriZnakyPlus();
+
+                    int rok = inputHandler.validniRok();
+                    int cenaZakladni = inputHandler.cenaStoPlus();
+
+                    System.out.println("Zadejte objem motorky: ");
+                    int objem = inputHandler.validniIntVstup();
+                    boolean kufr = inputHandler.maKufr();
+
+                    garaz.pridejMotorku(znacka, model, rok, cenaZakladni, objem, kufr);
+                }
+                case 3 -> {
+                    System.out.println("Přidání náklaďáku");
+
+                    System.out.println("Zadejte značku náklaďáku: ");
+                    String znacka = inputHandler.validniStringTriZnakyPlus();
+                    System.out.println("Zadejte model náklaďáku: ");
+                    String model = inputHandler.validniStringTriZnakyPlus();
+
+                    int rok = inputHandler.validniRok();
+                    int cenaZakladni = inputHandler.cenaStoPlus();
+
+                    System.out.println("Zadejte nosnost náklaďáku: ");
+                    int nosnost = inputHandler.validniIntVstup();
+                    int pocetNapravkufr = inputHandler.pocetNaprav();
+
+                    garaz.pridejNakladak(znacka, model, rok, cenaZakladni, nosnost, pocetNapravkufr);
+                }
+                case 4 -> {
+                    garaz.vypisVse();
+                }
+                case 5 -> {
+                    garaz.vypisHodnotuGaraze();
+                }
+                case 6 -> {
+                    System.out.println("Konec programu");
+                    hlavniCyklus = false;
+                }
+                default -> System.out.println("Chybná volba, zadejte číslo dle nabídky v menu.");
+            }
+        }
+    }
+}
