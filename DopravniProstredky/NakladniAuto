@@ -1,0 +1,38 @@
+package org.example;
+
+public class NakladniAuto extends DopravniProstredek {
+    private int nosnost;
+    private int pocetNaprav;
+
+    NakladniAuto(String znacka, String model, int rokVyroby, int zakladniCena, int nosnost, int pocetNaprav) {
+        super(znacka, model, rokVyroby, zakladniCena);
+        this.nosnost = nosnost;
+        this.pocetNaprav = pocetNaprav;
+    }
+
+    @Override
+    public int vypisVyslednouCenu() {
+        int napravaBonus = getPocetNaprav() * 20000;
+        int nosnostBonus = (getNosnost() / 1000) * 2000;
+        return getZakladniCena() + napravaBonus + nosnostBonus;
+
+    }
+
+    @Override
+    public void vypisVsechnyInformace() {
+        System.out.println("Nákladní auto " + getZnacka() + " " + getModel());
+        System.out.println("Rok výroby: " + getRokVyroby());
+        System.out.println("Zákl. cena: " + getZakladniCena());
+        System.out.println("Počet náprav: " + getPocetNaprav());
+        System.out.println("Nosnost: " + getNosnost());
+        System.out.println("Výsledná cena: " + vypisVyslednouCenu());
+    }
+
+    public int getNosnost() {
+        return nosnost;
+    }
+
+    public int getPocetNaprav() {
+        return pocetNaprav;
+    }
+}
