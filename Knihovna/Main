@@ -1,0 +1,97 @@
+package org.example;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        Knihovna knihovna = new Knihovna();
+        knihovna.nakrmeniKnihovny();
+        boolean hlavniCyklus = true;
+
+        System.out.println("*** KNIHOVNA ***");
+
+        while (hlavniCyklus) {
+            Knihovna.vypisMenu();
+
+            int volba = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (volba) {
+                case 1 -> {
+                    System.out.println("Vložte název knihy: ");
+                    String nazev = scanner.nextLine();
+
+                    System.out.println("Vložte jméno autora: ");
+                    String jmeno = scanner.nextLine();
+
+                    System.out.println("Vložte název knihy: ");
+                    String vydani = scanner.nextLine();
+
+                    knihovna.pridaniKnihy(nazev, jmeno, vydani, true);
+                }
+                case 2 -> {
+                    knihovna.vypisVsechnyKnihy();
+                }
+                case 3 -> {
+                    if (knihovna.jeKnihovnaPrazdna()) {
+                        System.out.println("Knihovna je prázdná. Akci nelze provést.");
+                        continue;
+                    }
+                    System.out.println("Zadejte číslo knihy, kteoru chcete půjčit: ");
+                    int pozice = scanner.nextInt();
+                    scanner.nextLine();
+                    knihovna.pujceniKnihy(pozice);
+                }
+                case 4 -> {
+                    System.out.println("Zvolte parametr, dle kterého hledáte knihu (jeho číslo):");
+                    int pocetParametru = knihovna.vypisParametryKnihy();
+
+                    int parametr = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (parametr < 1 || parametr > pocetParametru - 1) {
+                        System.out.println("Vaše volba neodpovídá žádnému vyhledávacímu parametru.");
+                    } else {
+                        System.out.println("Zadejte klíčové slovo pro hledání: ");
+                        String coHledam = scanner.nextLine();
+                        knihovna.najdiKnihu(coHledam, parametr);
+                    }
+                }
+                case 5 -> {
+                    if (knihovna.jeKnihovnaPrazdna()) {
+                        System.out.println("Knihovna je prázdná. Akci nelze provést.");
+                        continue;
+                    }
+                    System.out.println("Zadejte číslo knihy, kteoru chcete smazat: ");
+                    int pozice = scanner.nextInt();
+                    scanner.nextLine();
+                    knihovna.smazaniKnihy(pozice);
+                }
+                case 6 -> {
+                    if (knihovna.jeKnihovnaPrazdna()) {
+                        System.out.println("Knihovna je prázdná. Akci nelze provést.");
+                        continue;
+                    }
+                    System.out.println("Zadejte číslo knihy, kteoru chcete vrátit: ");
+                    int pozice = scanner.nextInt();
+                    scanner.nextLine();
+                    knihovna.vraceniKnihy(pozice);
+                }
+                case 7 -> {
+                    System.out.println("Program je ukončen.");
+                    hlavniCyklus = false;
+                }
+                default -> System.out.println(0);
+            }
+        }
+    }
+}
+
+/*
+ Vyhledat knihy podle názvu.
+Uživatel zadá část názvu.
+Program zobrazí všechny odpovídající knihy.
+Vyhledávání nebude rozlišovat velká a malá písmena.
+ */
