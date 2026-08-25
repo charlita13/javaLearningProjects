@@ -1,0 +1,35 @@
+package org.example;
+
+public class Kniha {
+    private String nazev;
+    private String autor;
+    private String rokVydani;
+    private boolean dostupnost;
+
+    Kniha(String nazev, String autor, String rokVydani, boolean dostupnost) {
+        this.nazev = nazev;
+        this.autor = autor;
+        this.rokVydani = rokVydani;
+        this.dostupnost = dostupnost;
+    }
+
+    public String getNazev() {
+        return nazev;
+    }
+
+    public String getRokVydani() {
+        return rokVydani;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public boolean getDostupnost() {
+        return dostupnost;
+    }
+
+    public void setDostupnost(boolean dostupnost) {
+        this.dostupnost = dostupnost;
+    }
+}
