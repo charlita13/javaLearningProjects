@@ -1,0 +1,56 @@
+package org.example;
+
+import java.util.ArrayList;
+
+public class Garaz {
+
+    ArrayList<DopravniProstredek> vozidla = new ArrayList<>();
+
+    static void vypisMenu() {
+        System.out.println("Zvolte jednu z následujících možností: ");
+        for (MenuVolby volba : MenuVolby.values()) {
+            System.out.println(volba.pozice + " - " + volba.popis);
+        }
+    }
+
+    public void pridejAuto(String znacka, String model, int rokVyroby, int zakaldniCena, String typPaliva, int pocetDveri) {
+        Auto auto = new Auto(znacka, model, rokVyroby, zakaldniCena, pocetDveri, typPaliva);
+        vozidla.add(auto);
+        System.out.println("Do garáže bylo přidáno nové vozidlo - auto.");
+    }
+
+    public void pridejMotorku(String znacka, String model, int rokVyroby, int zakaldniCena, int objemMotoru, boolean kufr) {
+        Motorka motorka = new Motorka(znacka, model, rokVyroby, zakaldniCena, objemMotoru, kufr);
+        vozidla.add(motorka);
+        System.out.println("Do garáže bylo přidáno nové vozidlo - motorka.");
+    }
+
+    public void pridejNakladak(String znacka, String model, int rokVyroby, int zakaldniCena, int pocetNaprav, int nosnost) {
+        NakladniAuto nakladniAuto = new NakladniAuto(znacka, model, rokVyroby, zakaldniCena, nosnost, pocetNaprav);
+        vozidla.add(nakladniAuto);
+        System.out.println("Do garáže bylo přidáno nové vozidlo - nakladní auto.");
+    }
+
+    public void vypisVse() {
+        if (vozidla.isEmpty()) {
+            System.out.println("Garáž je prádná.");
+        } else {
+            System.out.println("Gáráž obsahuje následující vozidla:");
+            for (DopravniProstredek dopravniProstredek : vozidla) {
+                dopravniProstredek.vypisVsechnyInformace();
+            }
+        }
+    }
+
+    public void vypisHodnotuGaraze() {
+        if (vozidla.isEmpty()) {
+            System.out.println("Garáž je prádná.");
+        } else {
+            int cena = 0;
+            for (DopravniProstredek dopravniProstredek : vozidla) {
+                cena += dopravniProstredek.vypisVyslednouCenu();
+            }
+            System.out.println("Výsledná cena garáže je: " + cena);
+        }
+    }
+}
