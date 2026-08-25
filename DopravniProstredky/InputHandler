@@ -1,0 +1,130 @@
+package org.example;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class InputHandler {
+
+    Scanner scanner = new Scanner(System.in);
+
+    public int validniIntVstup() {
+        System.out.println("Zadejte celé číslo:");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                return cislo;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Vstup musí být celé číslo. Zadejte jej prosím: ");
+            }
+        }
+    }
+
+    public String validniStringTriZnakyPlus() {
+        System.out.println("Zadejte text (alespoň 3 znaky bez mezer): ");
+        while (true) {
+            String text = scanner.nextLine();
+            text = text.trim();
+            if (text.length() >= 3 && !text.contains(" ")) {
+                return text;
+            }
+            System.out.println("Vstup musí mít alespoň 3 znaky bez mezer. Zadejte jej prosím: ");
+        }
+    }
+
+    public String druhPaliva() {
+        System.out.println("Zadejte druh paliva (B - benzin, N - nafta, E - elektro): ");
+        while (true) {
+            String text = scanner.nextLine();
+            text = text.trim().toLowerCase();
+            if (text.length() == 1 && (text.equals("b") || text.equals("n") || text.equals("e"))) {
+                return text;
+            }
+            System.out.println("Vstup musí být písmeno označující druh paliva. Zadejte jej prosím: ");
+        }
+    }
+
+    public int validniRok() {
+        System.out.println("Zadejte rok v rozemzí 2000 - současnost: ");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                if (cislo >= 2000 && cislo <= 2026) {
+                    return cislo;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Vstup musí být rok v rozmezí 2000 - současnost: ");
+        }
+    }
+
+    public int cenaStoPlus() {
+        System.out.println("Zadejte cenu: ");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                if (cislo >= 100000) {
+                    return cislo;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte skutečnou cenu: ");
+        }
+    }
+
+    public int pocetDveri() {
+        System.out.println("Zadejte počet dveří: ");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                if (cislo >= 3 && cislo < 7) {
+                    return cislo;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte skutečný počet dveří: ");
+        }
+    }
+
+    public int pocetNaprav() {
+        System.out.println("Zadejte počet náprav: ");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                if (cislo >= 2 && cislo < 7) {
+                    return cislo;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte skutečný počet náprav: ");
+        }
+    }
+
+    public boolean maKufr() {
+        System.out.println("Zadejte zda má motocykl kufr, 1 - ANO, 2 - NE.");
+        while (true) {
+            try {
+                int cislo = scanner.nextInt();
+                scanner.nextLine();
+                if (cislo == 1 ) {
+                    return true;
+                }
+                if (cislo == 2) {
+                    return false;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            System.out.println("Zadejte zda má motocykl kufr, 1 - ANO, 2 - NE.");
+        }
+    }
+}
