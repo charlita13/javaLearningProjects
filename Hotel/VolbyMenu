@@ -1,0 +1,20 @@
+package org.example;
+
+public enum VolbyMenu {
+    PRIDAT_POK(1, "Přidat pokoj"),
+    PRIDAT_HOST(2, "Přidat hosta"),
+    DELEJ_REZ(3, "Vytvořit rezervaci"),
+    ZRUS_REZ(4, "Zrušit rezervaci"),
+    VYPIS_POKOJE(5, "Vypsat pokoje"),
+    VYPIS_REZER(6, "Vypsat rezervace"),
+    HODNOTA(7, "Zobrazit celkovou hodnotu rezervací"),
+    KONEC(8, "Ukončit program");
+
+    int cilo;
+    String popis;
+
+    VolbyMenu(int cilo, String popis) {
+        this.cilo = cilo;
+        this.popis = popis;
+    }
+}
