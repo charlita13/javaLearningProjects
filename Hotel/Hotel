@@ -1,0 +1,187 @@
+package org.example;
+
+import java.util.ArrayList;
+
+public class Hotel {
+
+    private final ArrayList<Host> seznamHostu = new ArrayList<>();
+    private final ArrayList<Pokoj> seznamPokoju = new ArrayList<>();
+    private final ArrayList<Rezervace> seznamRezervaci = new ArrayList<>();
+    private int idValue = 100000;
+
+    static void vypisMenu() {
+        System.out.println("Vyberte z následujících možností (zadejte číslo volby):");
+        for (VolbyMenu volba : VolbyMenu.values()) {
+            System.out.println(volba.cilo + " - " +  volba.popis);
+        }
+    }
+
+    public void pridaniPokoje(int cisloPOkoje, int pocetLuzek, int cenaZaNoc) {
+        Pokoj pokoj= new Pokoj(cisloPOkoje, pocetLuzek, cenaZaNoc);
+        seznamPokoju.add(pokoj);
+        System.out.println("Pokoj byl přidán do databáze pokojů.");
+    }
+
+    public void pridaniHosta(String jmeno, String prijmeni) {
+        Host host = new Host(jmeno, prijmeni, idValue);
+        seznamHostu.add(host);
+        System.out.println("Host byl přidán do databáze hostů.");
+        idValue++;
+    }
+
+    public boolean jeCisloPokojeVolne(int zadaneCislo) {
+        if (seznamPokojuJePrazdny()) {
+            return true;
+        }
+        for (Pokoj pokoj : seznamPokoju) {
+            if (pokoj.getCisloPokoje() == zadaneCislo) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean seznamPokojuJePrazdny() {
+        return seznamPokoju.isEmpty();
+    }
+
+    public boolean seznamRezervaciJeprazdny() {
+        return seznamRezervaci.isEmpty();
+    }
+
+    public boolean seznamHostuJePrazdny() {
+        return seznamHostu.isEmpty();
+    }
+
+    public void vypisHosty() {
+        System.out.println("Seznam hostů: ");
+        for (Host host : seznamHostu) {
+            System.out.println(host.getId() + " || " + host.getJmeno() + " || " + host.getPrijmeni());
+        }
+    }
+
+    public void vypisVolnePokoje() {
+        boolean nalezenPokoj = false;
+        System.out.println("Seznam volnych pokojů: ");
+        for (Pokoj pokoj : seznamPokoju) {
+            if (pokoj.jePokojVolny()) {
+                System.out.println(pokoj.getCisloPokoje()  + " || lůžek: " + pokoj.getPocetLuzek() + " || cena za noc: " + pokoj.getCenaZaNoc());
+                nalezenPokoj = true;
+            }
+        }
+        if (!nalezenPokoj) {
+            System.out.println("Nejsou k dispozici žádné volné pokoje.");
+        }
+    }
+
+    public boolean shodujeSeCisloPokoje(int zadaneCislo) {
+        for (Pokoj pokoj : seznamPokoju) {
+            if (pokoj.getCisloPokoje() == zadaneCislo) {
+                return true;
+            }
+        }
+        System.out.println("Toto číslo pokoje v systému nebylo nalezeno.");
+        return false;
+    }
+
+    public boolean shodujeSeCisloHosta(int zadaneCislo) {
+        for (Host host : seznamHostu) {
+            if (host.getId() == zadaneCislo) {
+                return true;
+            }
+        }
+        System.out.println("Toto ID hosta v systému nebylo nalezeno.");
+        return false;
+    }
+
+    public void zalozeniRezervace(int cisloPokoje, int idHosta, int pocetNoci) {
+        Pokoj pokoj = null;
+        for (Pokoj p : seznamPokoju) {
+            if (p.getCisloPokoje() == cisloPokoje) {
+                pokoj = p;
+            }
+        }
+
+        if (!pokoj.jePokojVolny()) {
+            System.out.println("Tento pokoj není volný.");
+            return;
+        }
+
+        Host host = null;
+        for (Host h : seznamHostu) {
+            if (h.getId() == idHosta) {
+                host = h;
+            }
+        }
+
+        Rezervace rezervace = new Rezervace(pokoj, host, pocetNoci);
+        seznamRezervaci.add(rezervace);
+        System.out.println("Rezervace byla přidána do systému.");
+
+        pokoj.setJePokojVolny(false);
+
+    }
+
+    public void vypisVsechnyRezervace() {
+        if (seznamRezervaci.isEmpty()) {
+            System.out.println("Seznam rezervací je prázdný.");
+            return;
+        }
+        int pozice = 1;
+        System.out.println("Seznam rezervací v systému: ");
+        for (Rezervace rezervace : seznamRezervaci) {
+            System.out.println("================================================================");
+            System.out.println("Číslo rezervace: " + pozice);
+            System.out.println("Jméno: " + rezervace.getHost().getJmeno() + " " + rezervace.getHost().getPrijmeni() + "( ID: " + rezervace.getHost().getId() + ")");
+            System.out.println("Pokoj: " + rezervace.getPokoj().getCisloPokoje());
+            System.out.println("Nocí: " + rezervace.getPocetNoci());
+            System.out.println("Cena za noc: " + rezervace.getPokoj().getCenaZaNoc());
+            System.out.println("Cena celková:  " + rezervace.cenaRezervace() + " Kč");
+            System.out.println();
+            pozice++;
+        }
+    }
+
+    public void vypisVsechnyPokoje() {
+        if (seznamPokoju.isEmpty()) {
+            System.out.println("Seznam pokojů je prázdný.");
+            return;
+        }
+        System.out.println("Seznam pokojů v systému: ");
+        for (Pokoj pok : seznamPokoju) {
+            System.out.println("================================================================");
+            System.out.println("Číslo pokoje: " + pok.getCisloPokoje());
+            System.out.println("Cena za noc: " + pok.getCenaZaNoc());
+            System.out.println("Počet lůžek: " + pok.getPocetLuzek());
+            String dostupnost = (pok.jePokojVolny()) ? "ANO" : "NE";
+            System.out.println("Je pokoj volný: " + dostupnost);
+            System.out.println();
+        }
+    }
+
+    public void celkovaHodnotaRezervaci() {
+        if (seznamRezervaci.isEmpty()) {
+            System.out.println("Aktuálně evidujeme rezervace v hodnotě 0 Kč");
+            return;
+        }
+        int soucet = 0;
+        for (Rezervace rezervace : seznamRezervaci) {
+            soucet += rezervace.cenaRezervace();
+        }
+        System.out.println("Aktuálně evidujeme rezervace v hodnotě " + soucet + " Kč");
+    }
+
+    public void zruseniRezervace(int cisloRezervace) {
+        int pozice = 0;
+        if (cisloRezervace <= seznamRezervaci.size()) {
+            Rezervace rezervace = seznamRezervaci.get(cisloRezervace - 1);
+            rezervace.getPokoj().setJePokojVolny(true);
+
+            seznamRezervaci.remove(cisloRezervace - 1);
+            System.out.println("Rezervace byla smazána.");
+
+        } else {
+            System.out.println("Tuto rezervaci v systému neevidujeme.");
+        }
+    }
+}
