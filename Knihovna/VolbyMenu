@@ -1,0 +1,19 @@
+package org.example;
+
+public enum VolbyMenu {
+    PRIDAT(1, "Přidej knihu"),
+    PREHLED(2, "Vypiš všechny knihy"),
+    PUJCIT(3, "Vypůjčení knihy"),
+    HLEDANI(4, "Vyhledání knihy"),
+    SMAZAT(5, "Smaž knihu"),
+    VRATIT(6, "Vrátit knihu"),
+    KONEC(7, "Konec programu");
+
+    int volba;
+    String popis;
+
+    VolbyMenu(int volba, String popis) {
+        this.volba = volba;
+        this.popis = popis;
+    }
+}
