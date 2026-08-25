@@ -1,0 +1,93 @@
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+
+        boolean hlavniCyklus = true;
+        Hotel hotel = new Hotel();
+        InputHandler inputHandler = new InputHandler();
+
+
+        while (hlavniCyklus) {
+
+            Hotel.vypisMenu();
+
+            int volbaVMenu = inputHandler.volbaCislaMenu();
+
+            switch (volbaVMenu) {
+                case 1 -> {
+                    int cisloPokoje = inputHandler.cisloPokoje();
+
+                    while (!hotel.jeCisloPokojeVolne(cisloPokoje)) {
+                        System.out.println("Toto číslo pokoje již evidujeme v systému, každý pokoj musí mít unikátní číslo.");
+                        cisloPokoje = inputHandler.cisloPokoje();
+                    }
+
+                    int pocetLuzek = inputHandler.pocetLuzek();
+                    int cenaZaNoc = inputHandler.cenaZaNocZaPokoj();
+
+                    hotel.pridaniPokoje(cisloPokoje, pocetLuzek, cenaZaNoc);
+                }
+                case 2 -> {
+                    System.out.println("Vložte křestní jméno hosta: ");
+                    String jmeno = inputHandler.klasickyString();
+                    System.out.println("Vložte příjmení hosta: ");
+                    String prijmeni = inputHandler.klasickyString();
+
+                    hotel.pridaniHosta(jmeno, prijmeni);
+                }
+                case 3 -> {
+                    if (hotel.seznamHostuJePrazdny()) {
+                        System.out.println("Nelze zadat rezervaci, v databázi nejsou žádní hosté.");
+                        continue;
+                    }
+                    if (hotel.seznamPokojuJePrazdny()) {
+                        System.out.println("Nelze zadat rezervaci, v databázi nejsou žádné volné pokoje.");
+                        continue;
+                    }
+
+                    hotel.vypisVolnePokoje();
+                    int cisloPokoje = inputHandler.cisloPokoje();
+                    while (!hotel.shodujeSeCisloPokoje(cisloPokoje)) {
+                        cisloPokoje = inputHandler.cisloPokoje();
+                    }
+
+                    hotel.vypisHosty();
+                    int cisloHosta = inputHandler.idHosta();
+                    while (!hotel.shodujeSeCisloHosta(cisloHosta)) {
+                        cisloHosta = inputHandler.idHosta();
+                    }
+
+                    int pocetNoci = inputHandler.pocetNoci();
+
+                    hotel.zalozeniRezervace(cisloPokoje, cisloHosta, pocetNoci);
+
+                }
+                case 4 -> {
+                    if (hotel.seznamRezervaciJeprazdny()) {
+                        System.out.println("Aktuálně v systému neevidujeme rezervace.");
+                        continue;
+                    }
+
+                    hotel.vypisVsechnyRezervace();
+
+                    int volbaRezervace = inputHandler.rezervaceKeZruseni();
+                    hotel.zruseniRezervace(volbaRezervace);
+                }
+                case 5 -> {
+                    hotel.vypisVsechnyPokoje();
+                }
+                case 6 -> {
+                    hotel.vypisVsechnyRezervace();
+                }
+                case 7 -> {
+                    hotel.celkovaHodnotaRezervaci();
+                }
+                case 8 -> {
+                    System.out.println("Hotelový program je ukončen.");
+                    hlavniCyklus = false;
+                }
+            }
+        }
+    }
+}
