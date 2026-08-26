@@ -1,0 +1,18 @@
+package org.example;
+
+public enum Manu {
+    CARD(1, "Přidat platbu kartou"),
+    ACCOUNT(2, "Přidat platbu převodem"),
+    CASH(3, "Přidat hotovostní platbu"),
+    SHOW(4, "Vypsat všechny platby"),
+    VALUE(5, "Zobrazit celkovou částku všech plateb"),
+    END(6, "Ukončit program");
+
+    int pozice;
+    String popis;
+
+    Manu(int pozice, String popis) {
+        this.pozice = pozice;
+        this.popis = popis;
+    }
+}
