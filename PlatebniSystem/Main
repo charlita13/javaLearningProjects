@@ -1,0 +1,76 @@
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+
+        boolean hlavniCyklus = true;
+        InputHandler inputHandler = new InputHandler();
+        PlatebniSystem platebniSystem = new PlatebniSystem();
+
+        while (hlavniCyklus) {
+            PlatebniSystem.vypisMenu();
+            int volbaMenu = inputHandler.intVetsiNezNula();
+            switch (volbaMenu) {
+                case 1 -> {
+                    System.out.println("Číslo karty: ");
+                    String cisloKarty = inputHandler.vratString();
+                    System.out.println("Suma: ");
+                    double suma = inputHandler.vratDouble();
+                    platebniSystem.pridejPlatbuKartou(suma, cisloKarty);
+                }
+                case 2 -> {
+                    System.out.println("Číslo účtu: ");
+                    String cisloKarty = inputHandler.vratString();
+                    System.out.println("Suma: ");
+                    double suma = inputHandler.vratDouble();
+                    platebniSystem.pridejPlatbuPrevodem(suma, cisloKarty);
+                }
+                case 3 -> {
+                    System.out.println("Suma: ");
+                    double suma = inputHandler.vratDouble();
+                    platebniSystem.pridejPlatbuhotove(suma);
+                }
+                case 4 -> {
+                    platebniSystem.vypisVsechnyPlatby();
+                }
+                case 5 -> {
+                    platebniSystem.hodnotaVsechPlateb();
+                }
+                case 6 -> {
+                    System.out.println("Ukončuji program");
+                    hlavniCyklus = false;
+                }
+            }
+        }
+    }
+}
+
+/*
+
+Každý typ platby bude mít nějaký vlastní specifický údaj, např.:
+
+karta → poslední 4 číslice karty
+převod → číslo účtu
+hotově → nemusí mít žádný další údaj
+
+4. Evidence plateb
+
+Do tohoto seznamu musíš být schopný vložit všechny tři typy plateb.
+
+
+5. Polymorfismus
+
+Při výpisu všech plateb projdi seznam:
+
+for (Platba platba : platby)
+
+a zavolej pouze metody definované v interface.
+
+Nemáš zjišťovat:
+
+if (platba instanceof PlatbaKartou)
+
+ani objekty přetypovávat.
+
+Každý objekt má sám zajistit, že se provede jeho správná implementace.
+ */
