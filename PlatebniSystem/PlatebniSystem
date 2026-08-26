@@ -1,0 +1,54 @@
+package org.example;
+
+import java.util.ArrayList;
+
+public class PlatebniSystem {
+
+    private final ArrayList<Platba> listPlateb = new ArrayList<>();
+
+    static void vypisMenu() {
+        for (Manu m : Manu.values()) {
+            System.out.println(m.pozice + " - " + m.popis);
+        }
+    }
+
+    public void pridejPlatbuKartou(double suma, String cisloKarty) {
+        PlatbaKartou platbaKartou = new PlatbaKartou(suma, cisloKarty);
+        listPlateb.add(platbaKartou);
+        System.out.println("Platba kartou byla zaevidována.");
+    }
+
+    public void pridejPlatbuPrevodem(double suma, String cisloUctu) {
+        PlatbaPrevodem platbaPrevodem = new PlatbaPrevodem(suma, cisloUctu);
+        listPlateb.add(platbaPrevodem);
+        System.out.println("Platba převodem byla zaevidována.");
+    }
+
+    public void pridejPlatbuhotove(double suma) {
+        PlatbaHotove platbaHotove = new PlatbaHotove(suma);
+        listPlateb.add(platbaHotove);
+        System.out.println("Platba hotovostí byla zaevidována.");
+    }
+
+    public void vypisVsechnyPlatby() {
+        if (listPlateb.isEmpty()) {
+            System.out.println("Žádné evidované platby");
+            return;
+        }
+        System.out.println("Přehled všech zaevidovaných plateb:");
+        int pozice = 1;
+        for (Platba platba : listPlateb) {
+            System.out.print(pozice + ": ");
+            platba.vypisInformaciOPlatbe();
+            pozice++;
+        }
+    }
+
+    public void hodnotaVsechPlateb() {
+        double soucet = 0;
+        for (Platba platba : listPlateb) {
+            soucet+=platba.provePlatbu();;
+        }
+        System.out.println("Součet všech evidovaných plateb je " + soucet);
+    }
+}
