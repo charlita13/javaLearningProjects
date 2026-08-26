@@ -1,0 +1,22 @@
+package org.example;
+
+public class PlatbaPrevodem implements Platba{
+
+    double suma;
+    String cisloUctu;
+
+    PlatbaPrevodem(double suma, String cisloUctu) {
+        this.suma = suma;
+        this.cisloUctu = cisloUctu;
+    }
+
+    @Override
+    public void vypisInformaciOPlatbe() {
+        System.out.println(suma + " Kč, identifikátor " + cisloUctu);
+    }
+
+    @Override
+    public double provePlatbu() {
+        return suma;
+    }
+}
