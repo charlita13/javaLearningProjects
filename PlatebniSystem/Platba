@@ -1,0 +1,8 @@
+package org.example;
+
+public interface Platba {
+
+    public void vypisInformaciOPlatbe();
+
+    public double provePlatbu();
+}
