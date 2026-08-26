@@ -1,0 +1,20 @@
+package org.example;
+
+public class PlatbaHotove implements Platba {
+
+    double suma;
+
+    PlatbaHotove(double suma) {
+        this.suma = suma;
+    }
+
+    @Override
+    public void vypisInformaciOPlatbe() {
+        System.out.println(suma + " Kč");
+    }
+
+    @Override
+    public double provePlatbu() {
+        return suma * 0.95;
+    }
+}
