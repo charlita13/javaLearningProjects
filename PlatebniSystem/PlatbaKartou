@@ -1,0 +1,27 @@
+package org.example;
+
+public class PlatbaKartou implements Platba{
+
+    double suma;
+    String cisloKarty;
+
+    PlatbaKartou(double suma, String cisloKarty) {
+        this.suma = suma;
+        this.cisloKarty = cisloKarty;
+    }
+
+    @Override
+    public void vypisInformaciOPlatbe() {
+        String puvodni = cisloKarty;
+        int index = 3;
+
+        String vysledek = "XXX" + puvodni.substring(index);
+
+        System.out.println(suma + " Kč, identifikátor " + vysledek);
+    }
+
+    @Override
+    public double provePlatbu() {
+        return suma * 1.02;
+    }
+}
